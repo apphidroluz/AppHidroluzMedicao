@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#f2f2f2</color>
+    <color name="colorPrimaryDark">#f2f2f2</color>
+    <color name="colorAccent">#e65c00</color>
+    <color name="preto">#000</color>
+    <color name="fundo">#f2f2f2</color>
+    <color name="azul_w">#0099cc</color>
+    <color name="azul_b">#0086b3</color>
+    <color name="branco">#ffffff</color>
+    <color name="cinza_c">#cccccc</color>
+    <color name="cinza_d">#707070</color>
+    <color name="laranja">#e65c00</color>
+    <color name="transparente">#00000000</color>
+    <color name="fonte">#001a33</color>
+    <color name="critico">#cc0000</color>
+</resources>

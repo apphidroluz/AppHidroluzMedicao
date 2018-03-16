@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:background="@color/branco"
+android:orientation="vertical"
+tools:context="com.example.comercial_medicao.androidnovo.HomeActivity">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:src="@drawable/logo1"
+        android:backgroundTint="@color/branco"/>
+
+    <!-- Usuario -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="15dp">
+<!--
+        <EditText
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:hint="USUÁRIO ou CONDOMÍNIO"
+            android:id="@+id/txtUsuario"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:textAllCaps="true"
+            android:layout_gravity="center"
+            android:backgroundTint="#CCC"
+            android:textColor="#001a33"
+            android:editable="false"
+            android:drawableTint="#ccc"/>
+-->
+        <TextView
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:text="Villa Leone"
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            android:textColor="#001a33"
+            android:textSize="20dp"
+            />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/button2"
+            android:textColor="#ffffff"
+            android:text="SAIR"
+            android:textSize="15dp"
+            android:onClick="sair"
+            style="@style/texto9"
+
+            />
+
+    </LinearLayout>
+    <!-- Atualizar -->
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/button"
+        android:text="Atualizar Medição"
+        android:textColor="@color/branco"
+        android:textSize="18dp"
+        style="@style/texto9"
+        android:onClick="medir"
+        android:layout_marginTop="10dp" />
+    <!-- Horario -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Última medição às 16:00 - 15/03/2018"
+        android:textColor="@color/cinza_d"
+        android:textSize="15dp"
+        android:gravity="center"
+        android:layout_marginBottom="5dp"
+        />
+    <!-- Detalhes -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbarStyle="outsideOverlay"
+        android:scrollIndicators="right"
+        android:scrollbars="vertical"
+        android:scrollbarFadeDuration="10000"
+        >
+
+        <!-- Reservatorios -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Caixa 01 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                >
+                <!-- Medidor -->
+                <me.itangqi.waveloadingview.WaveLoadingView
+                    android:id="@+id/waveLoadingView"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_gravity="center"
+                    app:wlv_borderColor="@color/azul_b"
+                    app:wlv_borderWidth="2dp"
+                    app:wlv_progressValue="50"
+                    app:wlv_round_rectangle="true"
+                    app:wlv_shapeType="circle"
+                    app:wlv_titleCenterColor="@color/fonte"
+                    app:wlv_titleCenterSize="30sp"
+                    app:wlv_titleCenterStrokeColor="@color/branco"
+                    app:wlv_titleCenterStrokeWidth="1dp"
+                    app:wlv_triangle_direction="north"
+                    app:wlv_waveAmplitude="0"
+                    app:wlv_waveColor="@color/azul_w"
+                    />
+                <!-- Informações -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="10dp"
+                    android:layout_gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="25dp"
+                        android:text="CAIXA D'ÁGUA 01"
+                        android:textColor="@color/cinza_d"
+                        android:textSize="15dp"
+                        android:textStyle="bold"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="25dp"
+                        android:text="BLOCO B"
+                        android:textColor="@color/cinza_d"
+                        android:textSize="15dp"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="Capacidade total: 10000L"
+                        android:textColor="@color/cinza_d"
+                        android:textSize="13dp"
+                        />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/txtCaixa1"
+                        android:textColor="@color/cinza_d"
+                        android:textSize="13dp"
+                        android:hint="Status do reservatório"
+                        android:editable="false"
+                        android:backgroundTint="@color/cinza_c"
+                        />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- Caixa 02 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                >
+                <!-- Medidor -->
+                <me.itangqi.waveloadingview.WaveLoadingView
+                    android:id="@+id/waveLoadingView2"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_gravity="center"
+                    app:wlv_borderColor="@color/azul_b"
+                    app:wlv_borderWidth="2dp"
+                    app:wlv_round_rectangle="true"
+                    app:wlv_shapeType="circle"
+                    app:wlv_titleCenterColor="@color/fonte"
+                    app:wlv_titleCenterSize="30sp"
+                    app:wlv_titleCenterStrokeColor="@color/branco"
+                    app:wlv_titleCenterStrokeWidth="1dp"
+                    app:wlv_triangle_direction="north"
+                    app:wlv_waveAmplitude="0"
+                    app:wlv_waveColor="@color/critico"
+                    />
+                <!-- Info -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="25dp"
+                        android:text="CAIXA D'ÁGUA 02"
+                        android:textColor="@color/cinza_d"
+                        android:textSize="15dp"
+                        android:textStyle="bold"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="25dp"
+                        android:text="BLOCO B"
+                        android:textColor="@color/cinza_d"
+                        android:textSize="15dp"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="Capacidade total: 10000L"
+                        android:textColor="@color/cinza_d"
+                        android:textSize="13dp"
+                        />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/txtCaixa2"
+                        android:textColor="@color/cinza_d"
+                        android:textSize="13dp"
+                        android:hint="Status do reservatório"
+                        android:editable="false"
+                        android:backgroundTint="@color/cinza_c"
+                        />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- Cisterna 01 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                >
+                <!-- Medidor -->
+                <me.itangqi.waveloadingview.WaveLoadingView
+                    android:id="@+id/waveLoadingView3"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_gravity="center"
+                    app:wlv_borderColor="@color/azul_b"
+                    app:wlv_borderWidth="2dp"
+                    app:wlv_progressValue="75"
+                    app:wlv_round_rectangle="true"
+                    app:wlv_shapeType="circle"
+                    app:wlv_titleCenterColor="@color/fonte"
+                    app:wlv_titleCenterSize="30sp"
+                    app:wlv_titleCenterStrokeColor="@color/branco"
+                    app:wlv_titleCenterStrokeWidth="1dp"
+                    app:wlv_triangle_direction="north"
+                    app:wlv_waveAmplitude="0"
+                    app:wlv_waveColor="@color/azul_w"
+                    />
+                <!-- Info -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="25dp"
+                        android:text="CISTERNA 01"
+                        android:textColor="@color/cinza_d"
+                        android:textSize="15dp"
+                        android:textStyle="bold"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="25dp"
+                        android:text="BLOCOS A e B"
+                        android:textColor="@color/cinza_d"
+                        android:textSize="15dp"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="Capacidade total: 20000L"
+                        android:textColor="@color/cinza_d"
+                        android:textSize="13dp"
+                        />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/txtCisterna1"
+                        android:textColor="@color/cinza_d"
+                        android:textSize="13dp"
+                        android:hint="Status do reservatório"
+                        android:editable="false"
+                        android:backgroundTint="@color/cinza_c"
+                        />
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+    </LinearLayout>
+
+</LinearLayout>

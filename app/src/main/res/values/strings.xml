@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Controle de nivel</string>
+    <!-- Tela Login -->
+    <string name="usuario">Login :</string>
+    <string name="senha">Senha :</string>
+    <string name="bntEntrar">ENTRAR</string>
+    <string name="bntSair">Sair</string>
+    <string name="unidade">Unidade:</string>
+    <string name="bloco">Bloco:</string>
+    <string name="DigUsu">Login</string>
+    <string name="DigSen">Senha</string>
+
+</resources>

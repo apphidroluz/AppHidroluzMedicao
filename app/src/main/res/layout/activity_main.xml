@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical"
+android:padding="16dp"
+android:background="#f2f2f2"
+tools:context="com.example.comercial_medicao.androidnovo.MainActivity">
+
+
+
+<LinearLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingLeft="10pt"
+    android:paddingRight="10pt"
+    android:paddingTop="10pt"
+    android:layout_marginTop="15dp">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:src="@drawable/logo1"
+        android:backgroundTint="#ccc"/>
+</LinearLayout>
+
+
+
+<EditText
+    android:id="@+id/editUser"
+    android:layout_width="301dp"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:ems="10"
+    android:hint="@string/DigUsu"
+    android:layout_marginTop="15dp"
+    android:backgroundTint="@color/fonte"
+    >
+
+    <requestFocus />
+</EditText>
+
+<EditText
+    android:id="@+id/editPass"
+    android:layout_width="301dp"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:ems="10"
+    android:hint="@string/DigSen"
+    android:inputType="textPassword"
+    android:layout_marginTop="15dp"
+    android:backgroundTint="@color/fonte"
+    />
+
+<Button
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    style="@style/texto9"
+    android:background="@drawable/button"
+    android:text="@string/bntEntrar"
+    android:layout_marginTop="20dp"
+    android:onClick="entrar"
+    android:textColor="@color/branco" />
+
+<ImageView
+    android:layout_marginTop="20dp"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:src="@drawable/slogan"
+    android:backgroundTint="@color/cinza_c"/>
+
+
+
+<TextView
+    android:layout_marginTop="20dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:autoLink="all"
+    android:gravity="center_horizontal"
+    android:linksClickable="true"
+    android:text="Central de Atendimento"
+    android:textColor="@color/cinza_d"
+    android:textAppearance="?android:attr/textAppearanceMedium"
+    />
+
+<TextView
+    android:layout_marginTop="5dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:autoLink="phone"
+    android:clickable="true"
+    android:gravity="center_horizontal"
+    android:linksClickable="true"
+    android:textSize="20dp"
+    android:text="2199-9999"
+    android:textColorLink="@color/cinza_d"
+    />
+
+
+</LinearLayout>
