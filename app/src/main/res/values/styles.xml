@@ -6,6 +6,7 @@
         <item name="colorPrimary">@color/branco</item>
         <item name="colorPrimaryDark">@color/branco</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:statusBarColor">?android:attr/colorAccent</item>
     </style>
 
     <style name="texto9">

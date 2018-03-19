@@ -109,6 +109,7 @@ tools:context="com.example.comercial_medicao.androidnovo.HomeActivity">
                 android:layout_marginBottom="10dp"
                 >
                 <!-- Medidor -->
+
                 <me.itangqi.waveloadingview.WaveLoadingView
                     android:id="@+id/waveLoadingView"
                     android:layout_width="150dp"
@@ -127,6 +128,7 @@ tools:context="com.example.comercial_medicao.androidnovo.HomeActivity">
                     app:wlv_waveAmplitude="0"
                     app:wlv_waveColor="@color/azul_w"
                     />
+
                 <!-- Informações -->
                 <LinearLayout
                     android:layout_width="match_parent"

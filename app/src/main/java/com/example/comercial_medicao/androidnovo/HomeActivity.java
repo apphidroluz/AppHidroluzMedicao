@@ -1,6 +1,7 @@
 package com.example.comercial_medicao.androidnovo;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
@@ -8,9 +9,20 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.InputStream;
+
 import me.itangqi.waveloadingview.WaveLoadingView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class HomeActivity extends Activity {
+
+    Conexao resposta = new Conexao();
+    ProgressDialog progress;
 
     EditText txtCaixa1, txtCaixa2, txtCisterna1;
     //NotificationCompat.Builder notification;
@@ -29,11 +41,13 @@ public class HomeActivity extends Activity {
 
 
         //Caixa d'água 1
+
+
         WaveLoadingView mWaveLoadingView = (WaveLoadingView) findViewById(R.id.waveLoadingView);
-        mWaveLoadingView.setShapeType(WaveLoadingView.ShapeType.CIRCLE);
-        mWaveLoadingView.setProgressValue(50); //O quanto o circulo está preenchido
-        mWaveLoadingView.setCenterTitle("50%");
-        mWaveLoadingView.setAmplitudeRatio(60);
+        mWaveLoadingView.setShapeType(WaveLoadingView.ShapeType.RECTANGLE);
+        mWaveLoadingView.setProgressValue(100);
+        mWaveLoadingView.setCenterTitle("100%");
+        mWaveLoadingView.setAmplitudeRatio(40);
         mWaveLoadingView.setTopTitleStrokeWidth(3);
         mWaveLoadingView.setAnimDuration(3000);
         mWaveLoadingView.pauseAnimation();
@@ -43,7 +57,7 @@ public class HomeActivity extends Activity {
 
         //Caixa d'água 2
         WaveLoadingView mWaveLoadingView2 = (WaveLoadingView) findViewById(R.id.waveLoadingView2);
-        mWaveLoadingView2.setShapeType(WaveLoadingView.ShapeType.CIRCLE);
+        mWaveLoadingView2.setShapeType(WaveLoadingView.ShapeType.RECTANGLE);
         mWaveLoadingView2.setProgressValue(25); //O quanto o círculo está preenchido
         mWaveLoadingView2.setCenterTitle("25%");
         mWaveLoadingView2.setAmplitudeRatio(60);
@@ -56,7 +70,7 @@ public class HomeActivity extends Activity {
 
         //Cisterna 1
         WaveLoadingView mWaveLoadingView3 = (WaveLoadingView) findViewById(R.id.waveLoadingView3);
-        mWaveLoadingView3.setShapeType(WaveLoadingView.ShapeType.CIRCLE);
+        mWaveLoadingView3.setShapeType(WaveLoadingView.ShapeType.RECTANGLE);
         mWaveLoadingView3.setProgressValue(75); //O quanto o círculo está preenchido
         mWaveLoadingView3.setCenterTitle("75%");
         mWaveLoadingView3.setAmplitudeRatio(60);
@@ -83,4 +97,46 @@ public class HomeActivity extends Activity {
         finish();
     }
 
-}
+
+
+   /* Conexao service = (Conexao) HttpConnection.createService(HttpConnection.RetrofitService.class);
+
+
+
+            public void onResponse(Call<Conexao> call, Response<Conexao> response) {
+
+                if (response.isSuccessful()) {
+
+                    Conexao respostaServidor = response.body();
+
+                    //verifica aqui se o corpo da resposta não é nulo
+                    if (respostaServidor != null) {
+
+
+                        resposta.setNivel0(respostaServidor.getNivel0());
+                        resposta.setNivel1(respostaServidor.getNivel1());
+                        resposta.setNivel2(respostaServidor.getNivel2());
+                        resposta.setNivel3(respostaServidor.getNivel3());
+                        resposta.setNivel4(respostaServidor.getNivel4());
+
+                        progress.dismiss();
+
+
+                    } else {
+
+                        Toast.makeText(getApplicationContext(), "Insira unidade e valores válidos", Toast.LENGTH_SHORT).show();
+                    }
+
+                } else {
+
+                    Toast.makeText(getApplicationContext(), "Resposta nula do servidor", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+*/
+
+        }
+
+
+
+
