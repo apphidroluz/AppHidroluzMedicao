@@ -1,11 +1,17 @@
 package com.example.comercial_medicao.androidnovo;
 
 import android.app.Activity;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
+import android.app.TaskStackBuilder;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -19,10 +25,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static java.security.AccessController.getContext;
+
 public class HomeActivity extends Activity {
 
     Conexao resposta = new Conexao();
     ProgressDialog progress;
+    private Button btn;
 
     EditText txtCaixa1, txtCaixa2, txtCisterna1;
     //NotificationCompat.Builder notification;
@@ -41,8 +50,6 @@ public class HomeActivity extends Activity {
 
 
         //Caixa d'água 1
-
-
         WaveLoadingView mWaveLoadingView = (WaveLoadingView) findViewById(R.id.waveLoadingView);
         mWaveLoadingView.setShapeType(WaveLoadingView.ShapeType.RECTANGLE);
         mWaveLoadingView.setProgressValue(100);
@@ -81,13 +88,44 @@ public class HomeActivity extends Activity {
         mWaveLoadingView3.cancelAnimation();
         mWaveLoadingView3.startAnimation();
 
+        Button btn = (Button) findViewById(R.id.btnmedir);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                medir(getApplicationContext());
+                //Toast.makeText(getApplicationContext(), "Ainda não é possivel sair.", Toast.LENGTH_LONG).show();
+                //notification.setSmallIcon(R.mipmap.ic_launcher);
+            }
+        });
+
+        }
+
+    public void medir(Context ctx){
+            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(ctx);
+            mBuilder.setAutoCancel(true)
+                    .setSmallIcon(R.mipmap.ic_launcher)
+                    .setContentTitle("Teste")
+                    .setContentText("testando")
+                    .setLights(Color.WHITE, 1000, 5000)
+                    .setVibrate(new long[]{100,500,200,800})
+                    .setWhen(System.currentTimeMillis())
+                    .setContentIntent(criarContent(ctx));
+
+            NotificationManagerCompat nmc = NotificationManagerCompat.from(ctx);
+            nmc.notify(340, mBuilder.build());
+
+        //Toast.makeText(this, "Em processo de desenvolvimento.", Toast.LENGTH_LONG).show();
+    }
+    public PendingIntent criarContent(Context ctx){
+        Intent it = new Intent(ctx, HomeActivity.class);
+        it.putExtra("titulo", "teste");
+
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(ctx);
+        stackBuilder.addNextIntent(it);
+        return stackBuilder.getPendingIntent(1001, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
-
-    public void medir(View v){
-        Toast.makeText(this, "Em processo de construção.", Toast.LENGTH_LONG).show();
-    }
 
     public void sair(View v){
         //Toast.makeText(this, "Ainda não é possivel sair.", Toast.LENGTH_LONG).show();
