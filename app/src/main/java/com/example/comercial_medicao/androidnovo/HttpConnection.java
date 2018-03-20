@@ -48,7 +48,7 @@ public class  HttpConnection {
                                               @Field("nivel1") String nivel1,
                                               @Field("nivel2") String nivel2,
                                               @Field("nivel3") String nivel3,
-                                              @Field("nivel4") String nivel4);
+                                              @Field("nivel5") String nivel4);
 
     }
 
