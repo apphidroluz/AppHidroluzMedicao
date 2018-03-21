@@ -1,53 +1,33 @@
 package com.example.comercial_medicao.androidnovo;
 
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
+
 public class Conexao {
 
-    private String nivel0;
-    private String nivel1;
-    private String nivel2;
-    private String nivel3;
-    private String nivel4;
 
-    public  Conexao(){}
-
-    public String getNivel0() {
-        return nivel0;
-    }
-
-    public void setNivel0(String nivel0) {
-        this.nivel0 = nivel0;
-    }
-
-    public String getNivel1() {
-        return nivel1;
-    }
-
-    public void setNivel1(String nivel1) {
-        this.nivel1 = nivel1;
-    }
-
-    public String getNivel2() {
-        return nivel2;
-    }
-
-    public void setNivel2(String nivel2) {
-        this.nivel2 = nivel2;
-    }
-
-    public String getNivel3() {
-        return nivel3;
-    }
-
-    public void setNivel3(String nivel3) {
-        this.nivel3 = nivel3;
-    }
-
-    public String getNivel4() {
-        return nivel4;
-    }
-
-    public void setNivel4(String nivel4) {
-        this.nivel4 = nivel4;
+    public InputStream OpenHttpConnection(String urlString) throws IOException {
+        InputStream in = null;
+        URLConnection conn = new URL(urlString).openConnection();
+        conn.setConnectTimeout(15000);
+        if (conn instanceof HttpURLConnection) {
+            try {
+                HttpURLConnection httpConn = (HttpURLConnection) conn;
+                httpConn.setRequestMethod("GET");
+                httpConn.connect();
+                if (httpConn.getResponseCode() == 200) {
+                    in = httpConn.getInputStream();
+                }
+                return in;
+            } catch (Exception e) {
+                e.printStackTrace();
+                throw new IOException("Erro de conexão2016");
+            }
+        }
+        throw new IOException("Não conectado");
     }
 }

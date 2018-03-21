@@ -7,6 +7,8 @@ import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
@@ -15,22 +17,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
-import java.io.InputStream;
 
 import me.itangqi.waveloadingview.WaveLoadingView;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-import static java.security.AccessController.getContext;
 
 public class HomeActivity extends Activity {
 
-    Conexao resposta = new Conexao();
-    ProgressDialog progress;
+    StringBuilder sb;
     private Button btn;
 
     EditText txtCaixa1, txtCaixa2, txtCisterna1;
@@ -51,8 +47,8 @@ public class HomeActivity extends Activity {
 
         //Caixa d'água 1
         WaveLoadingView mWaveLoadingView = (WaveLoadingView) findViewById(R.id.waveLoadingView);
-        mWaveLoadingView.setShapeType(WaveLoadingView.ShapeType.RECTANGLE);
-        mWaveLoadingView.setProgressValue(100);
+        mWaveLoadingView.setShapeType(WaveLoadingView.ShapeType.SQUARE);
+        mWaveLoadingView.setProgressValue(97);
         mWaveLoadingView.setCenterTitle("100%");
         mWaveLoadingView.setAmplitudeRatio(40);
         mWaveLoadingView.setTopTitleStrokeWidth(3);
@@ -64,7 +60,7 @@ public class HomeActivity extends Activity {
 
         //Caixa d'água 2
         WaveLoadingView mWaveLoadingView2 = (WaveLoadingView) findViewById(R.id.waveLoadingView2);
-        mWaveLoadingView2.setShapeType(WaveLoadingView.ShapeType.RECTANGLE);
+        mWaveLoadingView2.setShapeType(WaveLoadingView.ShapeType.SQUARE);
         mWaveLoadingView2.setProgressValue(25); //O quanto o círculo está preenchido
         mWaveLoadingView2.setCenterTitle("25%");
         mWaveLoadingView2.setAmplitudeRatio(60);
@@ -77,7 +73,7 @@ public class HomeActivity extends Activity {
 
         //Cisterna 1
         WaveLoadingView mWaveLoadingView3 = (WaveLoadingView) findViewById(R.id.waveLoadingView3);
-        mWaveLoadingView3.setShapeType(WaveLoadingView.ShapeType.RECTANGLE);
+        mWaveLoadingView3.setShapeType(WaveLoadingView.ShapeType.SQUARE);
         mWaveLoadingView3.setProgressValue(75); //O quanto o círculo está preenchido
         mWaveLoadingView3.setCenterTitle("75%");
         mWaveLoadingView3.setAmplitudeRatio(60);
@@ -93,31 +89,34 @@ public class HomeActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                medir(getApplicationContext());
-                //Toast.makeText(getApplicationContext(), "Ainda não é possivel sair.", Toast.LENGTH_LONG).show();
+                new teste().execute();
+
+                //medir(getApplicationContext());
+                Toast.makeText(getApplicationContext(), "Ainda não é possivel sair.", Toast.LENGTH_LONG).show();
                 //notification.setSmallIcon(R.mipmap.ic_launcher);
             }
         });
 
-        }
+    }
 
-    public void medir(Context ctx){
-            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(ctx);
-            mBuilder.setAutoCancel(true)
-                    .setSmallIcon(R.mipmap.ic_launcher)
-                    .setContentTitle("Teste")
-                    .setContentText("testando")
-                    .setLights(Color.WHITE, 1000, 5000)
-                    .setVibrate(new long[]{100,500,200,800})
-                    .setWhen(System.currentTimeMillis())
-                    .setContentIntent(criarContent(ctx));
+    public void medir(Context ctx) {
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(ctx);
+        mBuilder.setAutoCancel(true)
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentTitle("Teste")
+                .setContentText("testando")
+                .setLights(Color.WHITE, 1000, 5000)
+                .setVibrate(new long[]{100, 500, 200, 800})
+                .setWhen(System.currentTimeMillis())
+                .setContentIntent(criarContent(ctx));
 
-            NotificationManagerCompat nmc = NotificationManagerCompat.from(ctx);
-            nmc.notify(340, mBuilder.build());
+        NotificationManagerCompat nmc = NotificationManagerCompat.from(ctx);
+        nmc.notify(340, mBuilder.build());
 
         //Toast.makeText(this, "Em processo de desenvolvimento.", Toast.LENGTH_LONG).show();
     }
-    public PendingIntent criarContent(Context ctx){
+
+    public PendingIntent criarContent(Context ctx) {
         Intent it = new Intent(ctx, HomeActivity.class);
         it.putExtra("titulo", "teste");
 
@@ -127,7 +126,7 @@ public class HomeActivity extends Activity {
     }
 
 
-    public void sair(View v){
+    public void sair(View v) {
         //Toast.makeText(this, "Ainda não é possivel sair.", Toast.LENGTH_LONG).show();
         //notification.setSmallIcon(R.mipmap.ic_launcher);
         Intent it = new Intent(getApplicationContext(), MainActivity.class);
@@ -135,45 +134,79 @@ public class HomeActivity extends Activity {
         finish();
     }
 
+    public void ConsumirWebService() {
 
 
-   /* Conexao service = (Conexao) HttpConnection.createService(HttpConnection.RetrofitService.class);
+    }
 
+    class teste extends AsyncTask<Void, Void, String> {
 
+        @Override
+        protected String doInBackground(Void... voids) {
 
-            public void onResponse(Call<Conexao> call, Response<Conexao> response) {
+            String result = "";
+            JSONObject obj;
+            Caixas caixa = new Caixas();
+            JSONParser parser = new JSONParser();
 
-                if (response.isSuccessful()) {
+            JSONArray jsonArray = new JSONArray();
 
-                    Conexao respostaServidor = response.body();
+            try {
 
-                    //verifica aqui se o corpo da resposta não é nulo
-                    if (respostaServidor != null) {
+                obj = (JSONObject)  parser.parse(
+                        new HttpRemote()
+                                .getPost(
+                                        "http://192.168.1.126/php/bye.php"
+                                        , ""));
 
-
-                        resposta.setNivel0(respostaServidor.getNivel0());
-                        resposta.setNivel1(respostaServidor.getNivel1());
-                        resposta.setNivel2(respostaServidor.getNivel2());
-                        resposta.setNivel3(respostaServidor.getNivel3());
-                        resposta.setNivel4(respostaServidor.getNivel4());
-
-                        progress.dismiss();
-
-
-                    } else {
-
-                        Toast.makeText(getApplicationContext(), "Insira unidade e valores válidos", Toast.LENGTH_SHORT).show();
-                    }
-
-                } else {
-
-                    Toast.makeText(getApplicationContext(), "Resposta nula do servidor", Toast.LENGTH_SHORT).show();
-                }
-
-            }
+               /* obj = new JSONObject((Map) parser.parse(
+                        new HttpRemote()
+                                .getPost(
+                                        "http://192.168.1.126/php/bye.php"
+                                        , "")));
 */
+                caixa.setValor1((String) obj.get("nivel0"));
+               // caixa.setValor2((String) obj.get("nivel1"));
+
+                Toast.makeText(getApplicationContext(), caixa.toString(), Toast.LENGTH_LONG).show();
+
+            } catch (Exception e) {
+
+                e.printStackTrace();
+                return e.getMessage();
+            }
+
+
+            return result;
 
         }
+
+        @Override
+        protected void onPreExecute() {
+
+
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+
+        }
+
+    }
+
+
+    class Trend {
+        String name;
+        String url;
+
+        @Override
+        public String toString() {
+            return name;
+        }
+    }
+
+
+}
 
 
 
