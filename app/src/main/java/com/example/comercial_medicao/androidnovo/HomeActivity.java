@@ -175,6 +175,7 @@ public class HomeActivity extends Activity {
 
 
                 caixa.nivel = valor.get(0);
+                
                 caixa.nivel2 = valor.get(1);
 
             } catch (Exception e) {
