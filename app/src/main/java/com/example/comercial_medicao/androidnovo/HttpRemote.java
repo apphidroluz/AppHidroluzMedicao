@@ -8,7 +8,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class HttpRemote {
-    public String getPost(String strurl, String param) throws Exception {
+    public static String getPost(String strurl, String param) throws Exception {
         HttpURLConnection connection = (HttpURLConnection) new URL(strurl).openConnection();
         connection.setRequestMethod("POST");
         connection.setDoInput(true);

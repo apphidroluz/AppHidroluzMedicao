@@ -2,29 +2,29 @@ package com.example.comercial_medicao.androidnovo;
 
 import android.app.Activity;
 import android.app.PendingIntent;
-import android.app.ProgressDialog;
 import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 
 import me.itangqi.waveloadingview.WaveLoadingView;
 
 public class HomeActivity extends Activity {
+
+    Caixas caixa;
 
     StringBuilder sb;
     private Button btn;
@@ -33,9 +33,11 @@ public class HomeActivity extends Activity {
     //NotificationCompat.Builder notification;
     //private static final int uniqueID = 010101;
 
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void onStart() {
+        super.onStart();
+
         setContentView(R.layout.activity_home);
         txtCaixa1 = (EditText) findViewById(R.id.txtCaixa1);
         txtCaixa2 = (EditText) findViewById(R.id.txtCaixa2);
@@ -48,8 +50,8 @@ public class HomeActivity extends Activity {
         //Caixa d'água 1
         WaveLoadingView mWaveLoadingView = (WaveLoadingView) findViewById(R.id.waveLoadingView);
         mWaveLoadingView.setShapeType(WaveLoadingView.ShapeType.SQUARE);
-        mWaveLoadingView.setProgressValue(97);
-        mWaveLoadingView.setCenterTitle("100%");
+        mWaveLoadingView.setProgressValue(Integer.parseInt(caixa.getNivel()));
+        mWaveLoadingView.setCenterTitle(caixa.getNivel()+"%");
         mWaveLoadingView.setAmplitudeRatio(40);
         mWaveLoadingView.setTopTitleStrokeWidth(3);
         mWaveLoadingView.setAnimDuration(3000);
@@ -91,11 +93,20 @@ public class HomeActivity extends Activity {
 
                 new teste().execute();
 
-                //medir(getApplicationContext());
-                Toast.makeText(getApplicationContext(), "Ainda não é possivel sair.", Toast.LENGTH_LONG).show();
+                // medir(getApplicationContext());
+
                 //notification.setSmallIcon(R.mipmap.ic_launcher);
             }
         });
+
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+
+          new teste().execute();
 
     }
 
@@ -134,75 +145,53 @@ public class HomeActivity extends Activity {
         finish();
     }
 
-    public void ConsumirWebService() {
-
-
-    }
-
     class teste extends AsyncTask<Void, Void, String> {
+
+
+
 
         @Override
         protected String doInBackground(Void... voids) {
 
-            String result = "";
-            JSONObject obj;
-            Caixas caixa = new Caixas();
-            JSONParser parser = new JSONParser();
+          caixa = new Caixas();
 
-            JSONArray jsonArray = new JSONArray();
-
+            String valor = null;
+            String result = null;
             try {
+                result = HttpRemote.getPost("http://192.168.1.126/php/bye.php", "");
+                JSONArray  obj = new JSONArray(result);
 
-                obj = (JSONObject)  parser.parse(
-                        new HttpRemote()
-                                .getPost(
-                                        "http://192.168.1.126/php/bye.php"
-                                        , ""));
+                for(int i=0; i < obj.length(); i++) {
+                    JSONObject obj2 = obj.getJSONObject(i);
+                    valor = obj2.getString("nivel");
+                }
+               // String valor = obj.getString(Integer.parseInt("nivel"));
 
-               /* obj = new JSONObject((Map) parser.parse(
-                        new HttpRemote()
-                                .getPost(
-                                        "http://192.168.1.126/php/bye.php"
-                                        , "")));
-*/
-                caixa.setValor1((String) obj.get("nivel0"));
-               // caixa.setValor2((String) obj.get("nivel1"));
 
-                Toast.makeText(getApplicationContext(), caixa.toString(), Toast.LENGTH_LONG).show();
+                caixa.setNivel(valor);
+
+
+                Log.e("teste", valor);
+
 
             } catch (Exception e) {
-
                 e.printStackTrace();
-                return e.getMessage();
             }
 
 
             return result;
-
-        }
-
-        @Override
-        protected void onPreExecute() {
-
-
         }
 
         @Override
         protected void onPostExecute(String result) {
 
+
+
         }
 
-    }
 
 
-    class Trend {
-        String name;
-        String url;
 
-        @Override
-        public String toString() {
-            return name;
-        }
     }
 
 

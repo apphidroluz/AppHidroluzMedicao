@@ -2,30 +2,40 @@ package com.example.comercial_medicao.androidnovo;
 
 public class Caixas {
 
-    String valor1;
-    String valor2;
+    String nivel;
+    String nivel2;
+
+    public String getNivel() {
+        return nivel;
+    }
+
+    public void setNivel(String nivel) {
+        this.nivel = nivel;
+    }
+
+    public String getNivel2() {
+        return nivel2;
+    }
+
+    public void setNivel2(String nivel2) {
+        this.nivel2 = nivel2;
+    }
+
+    public Caixas(String nivel, String nivel2) {
+        this.nivel = nivel;
+        this.nivel2 = nivel2;
+    }
 
     @Override
     public String toString() {
         return "Caixas{" +
-                "valor1='" + valor1 + '\'' +
-                ", valor2='" + valor2 + '\'' +
+                "nivel='" + nivel + '\'' +
                 '}';
     }
 
-    public String getValor1() {
-        return valor1;
-    }
-
-    public void setValor1(String valor1) {
-        this.valor1 = valor1;
-    }
-
-    public String getValor2() {
-        return valor2;
-    }
-
-    public void setValor2(String valor2) {
-        this.valor2 = valor2;
+    public Caixas() {
     }
 }
+
+
+
