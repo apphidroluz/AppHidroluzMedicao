@@ -20,6 +20,9 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import me.itangqi.waveloadingview.WaveLoadingView;
 
 public class HomeActivity extends Activity {
@@ -63,8 +66,8 @@ public class HomeActivity extends Activity {
         //Caixa d'água 2
         WaveLoadingView mWaveLoadingView2 = (WaveLoadingView) findViewById(R.id.waveLoadingView2);
         mWaveLoadingView2.setShapeType(WaveLoadingView.ShapeType.SQUARE);
-        mWaveLoadingView2.setProgressValue(25); //O quanto o círculo está preenchido
-        mWaveLoadingView2.setCenterTitle("25%");
+        mWaveLoadingView2.setProgressValue(Integer.parseInt(caixa.getNivel2())); //O quanto o círculo está preenchido
+        mWaveLoadingView2.setCenterTitle(caixa.getNivel2()+"%");
         mWaveLoadingView2.setAmplitudeRatio(60);
         mWaveLoadingView2.setTopTitleStrokeWidth(3);
         mWaveLoadingView2.setAnimDuration(3000);
@@ -154,8 +157,9 @@ public class HomeActivity extends Activity {
         protected String doInBackground(Void... voids) {
 
           caixa = new Caixas();
+          List<String> valor = new ArrayList<>();
 
-            String valor = null;
+
             String result = null;
             try {
                 result = HttpRemote.getPost("http://192.168.1.126/php/bye.php", "");
@@ -163,16 +167,15 @@ public class HomeActivity extends Activity {
 
                 for(int i=0; i < obj.length(); i++) {
                     JSONObject obj2 = obj.getJSONObject(i);
-                    valor = obj2.getString("nivel");
+
+                    valor.add(i,obj2.getString("nivel" + i ));
+
                 }
                // String valor = obj.getString(Integer.parseInt("nivel"));
 
 
-                caixa.setNivel(valor);
-
-
-                Log.e("teste", valor);
-
+                caixa.nivel = valor.get(0);
+                caixa.nivel2 = valor.get(1);
 
             } catch (Exception e) {
                 e.printStackTrace();
