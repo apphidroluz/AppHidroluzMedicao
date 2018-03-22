@@ -7,7 +7,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
@@ -37,6 +39,7 @@ public class HomeActivity extends Activity {
     //private static final int uniqueID = 010101;
 
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onStart() {
         super.onStart();
@@ -53,67 +56,58 @@ public class HomeActivity extends Activity {
         //Caixa d'água 1
         WaveLoadingView mWaveLoadingView = (WaveLoadingView) findViewById(R.id.waveLoadingView);
         mWaveLoadingView.setShapeType(WaveLoadingView.ShapeType.SQUARE);
-        mWaveLoadingView.setProgressValue(Integer.parseInt(caixa.getNivel()));
+        if(Integer.parseInt(caixa.getNivel())==100){
+            mWaveLoadingView.setProgressValue(97);
+        }else{
+            mWaveLoadingView.setProgressValue(Integer.parseInt(caixa.getNivel()));
+        }
         mWaveLoadingView.setCenterTitle(caixa.getNivel()+"%");
-        mWaveLoadingView.setAmplitudeRatio(40);
+        mWaveLoadingView.setAmplitudeRatio(60);
         mWaveLoadingView.setTopTitleStrokeWidth(3);
         mWaveLoadingView.setAnimDuration(3000);
-        mWaveLoadingView.pauseAnimation();
+        if(Integer.parseInt(caixa.getNivel())<49){
+            mWaveLoadingView.setWaveColor(getColor(R.color.critico));
+        }else{
+            mWaveLoadingView.setWaveColor(getColor(R.color.azul_w));
+        }
+        /*mWaveLoadingView.pauseAnimation();
         mWaveLoadingView.resumeAnimation();
         mWaveLoadingView.cancelAnimation();
-        mWaveLoadingView.startAnimation();
+        mWaveLoadingView.startAnimation();*/
 
         //Caixa d'água 2
         WaveLoadingView mWaveLoadingView2 = (WaveLoadingView) findViewById(R.id.waveLoadingView2);
         mWaveLoadingView2.setShapeType(WaveLoadingView.ShapeType.SQUARE);
-        mWaveLoadingView2.setProgressValue(Integer.parseInt(caixa.getNivel2())); //O quanto o círculo está preenchido
+        if(Integer.parseInt(caixa.getNivel2())==100){
+            mWaveLoadingView2.setProgressValue(97);
+        }else{
+            mWaveLoadingView2.setProgressValue(Integer.parseInt(caixa.getNivel2()));
+        }
         mWaveLoadingView2.setCenterTitle(caixa.getNivel2()+"%");
         mWaveLoadingView2.setAmplitudeRatio(60);
         mWaveLoadingView2.setTopTitleStrokeWidth(3);
         mWaveLoadingView2.setAnimDuration(3000);
-        mWaveLoadingView2.pauseAnimation();
-        mWaveLoadingView2.resumeAnimation();
-        mWaveLoadingView2.cancelAnimation();
-        mWaveLoadingView2.startAnimation();
+        if(Integer.parseInt(caixa.getNivel2())<49){
+            mWaveLoadingView2.setWaveColor(getColor(R.color.critico));
+        }else{
+            mWaveLoadingView2.setWaveColor(getColor(R.color.azul_w));
+        }
 
-        //Cisterna 1
-        WaveLoadingView mWaveLoadingView3 = (WaveLoadingView) findViewById(R.id.waveLoadingView3);
-        mWaveLoadingView3.setShapeType(WaveLoadingView.ShapeType.SQUARE);
-        mWaveLoadingView3.setProgressValue(75); //O quanto o círculo está preenchido
-        mWaveLoadingView3.setCenterTitle("75%");
-        mWaveLoadingView3.setAmplitudeRatio(60);
-        mWaveLoadingView3.setTopTitleStrokeWidth(3);
-        mWaveLoadingView3.setAnimDuration(3000);
-        mWaveLoadingView3.pauseAnimation();
-        mWaveLoadingView3.resumeAnimation();
-        mWaveLoadingView3.cancelAnimation();
-        mWaveLoadingView3.startAnimation();
 
-        Button btn = (Button) findViewById(R.id.btnmedir);
+        /*Button btn = (Button) findViewById(R.id.btnmedir);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 new teste().execute();
-
-                // medir(getApplicationContext());
-
-                //notification.setSmallIcon(R.mipmap.ic_launcher);
             }
-        });
+        });*/
+
+        notificacao(caixa.getNivel(),caixa.getNivel2());
+
 
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-
-          new teste().execute();
-
-    }
-
-    public void medir(Context ctx) {
+    public void criarnotificacao(Context ctx){
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(ctx);
         mBuilder.setAutoCancel(true)
                 .setSmallIcon(R.mipmap.ic_launcher)
@@ -126,8 +120,28 @@ public class HomeActivity extends Activity {
 
         NotificationManagerCompat nmc = NotificationManagerCompat.from(ctx);
         nmc.notify(340, mBuilder.build());
+    }
 
-        //Toast.makeText(this, "Em processo de desenvolvimento.", Toast.LENGTH_LONG).show();
+    public void notificacao(String nv1, String nv2){
+        if(nv1.equals("025")||nv2.equals("025")){
+            criarnotificacao(getApplicationContext());
+        }
+    }
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+
+        super.onCreate(savedInstanceState);
+        new teste().execute();
+
+    }
+
+
+    public void medir(View v) {
+        new teste().execute();
+        Toast.makeText(this, "Hello", Toast.LENGTH_LONG).show();
+
     }
 
     public PendingIntent criarContent(Context ctx) {
