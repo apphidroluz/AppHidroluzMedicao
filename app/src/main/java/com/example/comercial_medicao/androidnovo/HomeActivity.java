@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
@@ -17,6 +18,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.ontbee.legacyforks.cn.pedant.SweetAlert.SweetAlertDialog;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -39,10 +42,51 @@ public class HomeActivity extends Activity {
     //private static final int uniqueID = 010101;
 
 
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        final SweetAlertDialog pDialog = new SweetAlertDialog(HomeActivity.this,
+                SweetAlertDialog.PROGRESS_TYPE);
+        pDialog.setTitleText("Aguarde !!!");
+        pDialog.setContentText("Procurando água.....");
+        pDialog.setCancelable(false);
+        pDialog.show();
+
+        new Thread() {
+            public void run() {
+                try {
+
+
+                    seilaoque();
+
+                    Thread.sleep(1000);
+                } catch (Exception e) {
+                    Log.e("tag", e.getMessage());
+                }
+                // encerra progress dialog
+                pDialog.dismiss();
+            }
+        }.start();
+
+
+
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onStart() {
         super.onStart();
+
+
 
         setContentView(R.layout.activity_home);
         txtCaixa1 = (EditText) findViewById(R.id.txtCaixa1);
@@ -52,59 +96,47 @@ public class HomeActivity extends Activity {
         //notification = new NotificationCompat.Builder(this);
         //notification.setAutoCancel(true);
 
+        if(caixa.getNivel() != null) {
 
-        //Caixa d'água 1
-        WaveLoadingView mWaveLoadingView = (WaveLoadingView) findViewById(R.id.waveLoadingView);
-        mWaveLoadingView.setShapeType(WaveLoadingView.ShapeType.SQUARE);
-        if(Integer.parseInt(caixa.getNivel())==100){
-            mWaveLoadingView.setProgressValue(97);
-        }else{
-            mWaveLoadingView.setProgressValue(Integer.parseInt(caixa.getNivel()));
-        }
-        mWaveLoadingView.setCenterTitle(caixa.getNivel()+"%");
-        mWaveLoadingView.setAmplitudeRatio(60);
-        mWaveLoadingView.setTopTitleStrokeWidth(3);
-        mWaveLoadingView.setAnimDuration(3000);
-        if(Integer.parseInt(caixa.getNivel())<49){
-            mWaveLoadingView.setWaveColor(getColor(R.color.critico));
-        }else{
-            mWaveLoadingView.setWaveColor(getColor(R.color.azul_w));
-        }
-        /*mWaveLoadingView.pauseAnimation();
-        mWaveLoadingView.resumeAnimation();
-        mWaveLoadingView.cancelAnimation();
-        mWaveLoadingView.startAnimation();*/
-
-        //Caixa d'água 2
-        WaveLoadingView mWaveLoadingView2 = (WaveLoadingView) findViewById(R.id.waveLoadingView2);
-        mWaveLoadingView2.setShapeType(WaveLoadingView.ShapeType.SQUARE);
-        if(Integer.parseInt(caixa.getNivel2())==100){
-            mWaveLoadingView2.setProgressValue(97);
-        }else{
-            mWaveLoadingView2.setProgressValue(Integer.parseInt(caixa.getNivel2()));
-        }
-        mWaveLoadingView2.setCenterTitle(caixa.getNivel2()+"%");
-        mWaveLoadingView2.setAmplitudeRatio(60);
-        mWaveLoadingView2.setTopTitleStrokeWidth(3);
-        mWaveLoadingView2.setAnimDuration(3000);
-        if(Integer.parseInt(caixa.getNivel2())<49){
-            mWaveLoadingView2.setWaveColor(getColor(R.color.critico));
-        }else{
-            mWaveLoadingView2.setWaveColor(getColor(R.color.azul_w));
-        }
-
-
-        /*Button btn = (Button) findViewById(R.id.btnmedir);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new teste().execute();
+            //Caixa d'água 1
+            WaveLoadingView mWaveLoadingView = (WaveLoadingView) findViewById(R.id.waveLoadingView);
+            mWaveLoadingView.setShapeType(WaveLoadingView.ShapeType.SQUARE);
+            if (Integer.parseInt(caixa.getNivel()) == 100) {
+                mWaveLoadingView.setProgressValue(97);
+            } else {
+                mWaveLoadingView.setProgressValue(Integer.parseInt(caixa.getNivel()));
             }
-        });*/
+            mWaveLoadingView.setCenterTitle(caixa.getNivel() + "%");
+            mWaveLoadingView.setAmplitudeRatio(60);
+            mWaveLoadingView.setTopTitleStrokeWidth(3);
+            mWaveLoadingView.setAnimDuration(3000);
+            if (Integer.parseInt(caixa.getNivel()) < 49) {
+                mWaveLoadingView.setWaveColor(getColor(R.color.critico));
+            } else {
+                mWaveLoadingView.setWaveColor(getColor(R.color.azul_w));
+            }
 
-        notificacao(caixa.getNivel(),caixa.getNivel2());
+            //Caixa d'água 2
+            WaveLoadingView mWaveLoadingView2 = (WaveLoadingView) findViewById(R.id.waveLoadingView2);
+            mWaveLoadingView2.setShapeType(WaveLoadingView.ShapeType.SQUARE);
+            if (Integer.parseInt(caixa.getNivel2()) == 100) {
+                mWaveLoadingView2.setProgressValue(97);
+            } else {
+                mWaveLoadingView2.setProgressValue(Integer.parseInt(caixa.getNivel2()));
+            }
+            mWaveLoadingView2.setCenterTitle(caixa.getNivel2() + "%");
+            mWaveLoadingView2.setAmplitudeRatio(60);
+            mWaveLoadingView2.setTopTitleStrokeWidth(3);
+            mWaveLoadingView2.setAnimDuration(3000);
+            if (Integer.parseInt(caixa.getNivel2()) < 49) {
+                mWaveLoadingView2.setWaveColor(getColor(R.color.critico));
+            } else {
+                mWaveLoadingView2.setWaveColor(getColor(R.color.azul_w));
+            }
 
+            notificacao(caixa.getNivel(), caixa.getNivel2());
 
+        }
     }
 
     public void criarnotificacao(Context ctx){
@@ -129,19 +161,17 @@ public class HomeActivity extends Activity {
     }
 
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void seilaoque(){
 
-        super.onCreate(savedInstanceState);
         new teste().execute();
 
     }
 
-
     public void medir(View v) {
-        new teste().execute();
         Toast.makeText(this, "Hello", Toast.LENGTH_LONG).show();
-
+        Intent mIt  = getIntent();
+        finish();
+        startActivity(mIt);
     }
 
     public PendingIntent criarContent(Context ctx) {
@@ -164,13 +194,23 @@ public class HomeActivity extends Activity {
 
     class teste extends AsyncTask<Void, Void, String> {
 
+        SweetAlertDialog pDialog = new SweetAlertDialog(HomeActivity.this, SweetAlertDialog.PROGRESS_TYPE);
 
+        protected void onPreExecute() {
+            super.onPreExecute();
 
+            pDialog.setTitleText("Aguarde");
+            pDialog.setCancelable(false);
+            pDialog.show();
 
-        @Override
+        }
+
+            @Override
         protected String doInBackground(Void... voids) {
 
           caixa = new Caixas();
+
+
           List<String> valor = new ArrayList<>();
 
 
@@ -189,8 +229,11 @@ public class HomeActivity extends Activity {
 
 
                 caixa.nivel = valor.get(0);
-                
                 caixa.nivel2 = valor.get(1);
+
+
+                Log.e("teste",caixa.getNivel());
+
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -200,16 +243,10 @@ public class HomeActivity extends Activity {
             return result;
         }
 
-        @Override
-        protected void onPostExecute(String result) {
-
-
-
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            pDialog.dismiss();
         }
-
-
-
-
     }
 
 
