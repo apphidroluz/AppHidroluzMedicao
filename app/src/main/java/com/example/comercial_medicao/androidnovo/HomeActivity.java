@@ -39,35 +39,22 @@ public class HomeActivity extends Activity {
     private Button btn;
     private boolean mediu = false;
 
-    EditText txtCaixa1, txtCaixa2, txtCisterna1;
-
-
-    //NotificationCompat.Builder notification;
-    //private static final int uniqueID = 010101;
-
-
+    EditText txtCaixa1, txtCaixa2;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-
         new DadosArduino().execute();
 
         while(mediu == false){
             try {
-
              Thread.sleep(100);
              Log.e("TESTE","ESTOU RODANDO");
-
            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
-
-
-
 
     }
 
@@ -75,16 +62,9 @@ public class HomeActivity extends Activity {
     @Override
     protected void onStart() {
         super.onStart();
-
-       // pDialog.dismiss();
-
         setContentView(R.layout.activity_home);
         txtCaixa1 = (EditText) findViewById(R.id.txtCaixa1);
         txtCaixa2 = (EditText) findViewById(R.id.txtCaixa2);
-        txtCisterna1 = (EditText) findViewById(R.id.txtCaixa1);
-
-        //notification = new NotificationCompat.Builder(this);
-        //notification.setAutoCancel(true);
 
         if(caixa.getNivel() != null) {
 
@@ -112,30 +92,40 @@ public class HomeActivity extends Activity {
             mWaveLoadingView2.setShapeType(WaveLoadingView.ShapeType.SQUARE);
             if (Integer.parseInt(caixa.getNivel2()) == 100) {
                 mWaveLoadingView2.setProgressValue(97);
+            } else if (Integer.parseInt(caixa.getNivel2()) > 100){
+                mWaveLoadingView2.setProgressValue(103);
             } else {
                 mWaveLoadingView2.setProgressValue(Integer.parseInt(caixa.getNivel2()));
             }
-            mWaveLoadingView2.setCenterTitle(caixa.getNivel2() + "%");
+            if(Integer.parseInt(caixa.getNivel2()) > 100) {
+                mWaveLoadingView2.setCenterTitle("Atenção");
+            }else {
+                mWaveLoadingView2.setCenterTitle(caixa.getNivel2() + "%");
+            }
             mWaveLoadingView2.setAmplitudeRatio(60);
             mWaveLoadingView2.setTopTitleStrokeWidth(3);
             mWaveLoadingView2.setAnimDuration(3000);
-            if (Integer.parseInt(caixa.getNivel2()) < 49) {
+            if (Integer.parseInt(caixa.getNivel2()) < 49 || Integer.parseInt(caixa.getNivel2()) > 100 ) {
                 mWaveLoadingView2.setWaveColor(getColor(R.color.critico));
             } else {
                 mWaveLoadingView2.setWaveColor(getColor(R.color.azul_w));
             }
 
-            notificacao(caixa.getNivel(), caixa.getNivel2());
+            notificacao25(caixa.getNivel(), caixa.getNivel2());
+            notificacao100(caixa.getNivel(), caixa.getNivel2());
+            notificacaoMax(Integer.parseInt(caixa.getNivel()), Integer.parseInt(caixa.getNivel2()));
 
         }
     }
 
-    public void criarnotificacao(Context ctx){
+//---------------------------------- NOTIFICAÇÕES ------------------------------------------------
+//   NOTIFICAÇÃO 25%
+    public void gerarNotificacao25(Context ctx){
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(ctx);
         mBuilder.setAutoCancel(true)
                 .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle("Teste")
-                .setContentText("testando")
+                .setContentTitle("AVISO")
+                .setContentText("O nível do reservatório está ficando baixo")
                 .setLights(Color.WHITE, 1000, 5000)
                 .setVibrate(new long[]{100, 500, 200, 800})
                 .setWhen(System.currentTimeMillis())
@@ -144,19 +134,53 @@ public class HomeActivity extends Activity {
         NotificationManagerCompat nmc = NotificationManagerCompat.from(ctx);
         nmc.notify(340, mBuilder.build());
     }
-
-    public void notificacao(String nv1, String nv2){
+    public void notificacao25(String nv1, String nv2){
         if(nv1.equals("025")||nv2.equals("025")){
-            criarnotificacao(getApplicationContext());
+            gerarNotificacao25(getApplicationContext());
         }
     }
 
+//   NOTIFICAÇÃO 100%
+    public void gerarNotificacao100(Context ctx){
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(ctx);
+        mBuilder.setAutoCancel(true)
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentTitle("AVISO")
+                .setContentText("O nível do reservatório está cheio")
+                .setLights(Color.WHITE, 1000, 5000)
+                .setVibrate(new long[]{100, 500, 200, 800})
+                .setWhen(System.currentTimeMillis())
+                .setContentIntent(criarContent(ctx));
 
-  /*  public void seilaoque(){
+        NotificationManagerCompat nmc = NotificationManagerCompat.from(ctx);
+        nmc.notify(341, mBuilder.build());
+    }
+    public void notificacao100(String nv1, String nv2){
+        if(nv1.equals("100")||nv2.equals("100")){
+            gerarNotificacao100(getApplicationContext());
+        }
+    }
 
-        new teste().execute();
+//   NOTIFICAÇÃO TRANSBORDO
+    public void gerarNotificacaoMax(Context ctx){
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(ctx);
+        mBuilder.setAutoCancel(true)
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentTitle("AVISO")
+                .setContentText("Seu reservatório está prestes a transbordar")
+                .setLights(Color.WHITE, 1000, 5000)
+                .setVibrate(new long[]{100, 500, 200, 800})
+                .setWhen(System.currentTimeMillis())
+                .setContentIntent(criarContent(ctx));
 
-    }*/
+        NotificationManagerCompat nmc = NotificationManagerCompat.from(ctx);
+        nmc.notify(341, mBuilder.build());
+    }
+    public void notificacaoMax(int nv1, int nv2){
+        if(nv1 > 100 || nv2 > 100){
+            gerarNotificacaoMax(getApplicationContext());
+        }
+    }
 
     public void medir(View v) {
         Toast.makeText(this, "Hello", Toast.LENGTH_LONG).show();
@@ -173,7 +197,6 @@ public class HomeActivity extends Activity {
         stackBuilder.addNextIntent(it);
         return stackBuilder.getPendingIntent(1001, PendingIntent.FLAG_UPDATE_CURRENT);
     }
-
 
     public void sair(View v) {
         //Toast.makeText(this, "Ainda não é possivel sair.", Toast.LENGTH_LONG).show();
