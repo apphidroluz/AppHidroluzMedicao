@@ -45,6 +45,8 @@ public class HomeActivity extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        TredArduino();
+
         new DadosArduino().execute();
 
         while(mediu == false){
@@ -278,6 +280,40 @@ public class HomeActivity extends Activity {
             pDialog.dismiss();
 
         }
+
+
+
+    }
+
+    public void TredArduino(){
+
+
+       /* try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }*/
+
+        Thread t = new Thread(new Runnable() {
+            public void run() {
+
+                try {
+                    Log.e("TESTE","ESTOU RODANDO1");
+                   Thread.sleep(600000);
+                   Log.e("TESTE","ESTOU RODANDO2");
+                    Intent mIt  = getIntent();
+                    finish();
+                    startActivity(mIt);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+
+        t.start();
+
     }
 
 
