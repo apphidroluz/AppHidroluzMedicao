@@ -46,6 +46,8 @@ public class HomeActivity extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
+
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
