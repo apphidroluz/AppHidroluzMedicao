@@ -39,8 +39,9 @@ public class HomeActivity extends Activity {
     private Button btn;
     private boolean mediu = false;
 
-
     EditText txtCaixa1, txtCaixa2, txtCisterna1;
+
+
     //NotificationCompat.Builder notification;
     //private static final int uniqueID = 010101;
 
@@ -50,15 +51,20 @@ public class HomeActivity extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        try {
-            Thread.sleep(1500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+
+
+        new DadosArduino().execute();
+
+        while(mediu == false){
+            try {
+
+             Thread.sleep(100);
+             Log.e("TESTE","ESTOU RODANDO");
+
+           } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
-
-
-        seilaoque();
-
 
 
 
@@ -70,7 +76,7 @@ public class HomeActivity extends Activity {
     protected void onStart() {
         super.onStart();
 
-
+       // pDialog.dismiss();
 
         setContentView(R.layout.activity_home);
         txtCaixa1 = (EditText) findViewById(R.id.txtCaixa1);
@@ -85,6 +91,7 @@ public class HomeActivity extends Activity {
             //Caixa d'água 1
             WaveLoadingView mWaveLoadingView = (WaveLoadingView) findViewById(R.id.waveLoadingView);
             mWaveLoadingView.setShapeType(WaveLoadingView.ShapeType.SQUARE);
+            mWaveLoadingView.startAnimation();
             if (Integer.parseInt(caixa.getNivel()) == 100) {
                 mWaveLoadingView.setProgressValue(97);
             } else {
@@ -145,11 +152,11 @@ public class HomeActivity extends Activity {
     }
 
 
-    public void seilaoque(){
+  /*  public void seilaoque(){
 
         new teste().execute();
 
-    }
+    }*/
 
     public void medir(View v) {
         Toast.makeText(this, "Hello", Toast.LENGTH_LONG).show();
@@ -176,30 +183,43 @@ public class HomeActivity extends Activity {
         finish();
     }
 
-    class teste extends AsyncTask<Void, Void, String> {
+    class DadosArduino extends AsyncTask<Void, Void, String> {
 
-        /*SweetAlertDialog pDialog = new SweetAlertDialog(HomeActivity.this, SweetAlertDialog.PROGRESS_TYPE);
+        final SweetAlertDialog pDialog = new SweetAlertDialog(HomeActivity.this,
+                SweetAlertDialog.PROGRESS_TYPE);
+
+
 
         protected void onPreExecute() {
             super.onPreExecute();
 
-            pDialog.setTitleText("Aguarde");
+
+            pDialog.setTitleText("Aguarde !!!");
+            pDialog.setContentText("Processando login.....");
             pDialog.setCancelable(false);
             pDialog.show();
 
-        }*/
 
-            @Override
+
+
+
+
+        }
+
+        @Override
         protected String doInBackground(Void... voids) {
 
-          caixa = new Caixas();
+            caixa = new Caixas();
 
 
-          List<String> valor = new ArrayList<>();
+            List<String> valor = new ArrayList<>();
 
 
             String result = null;
             try {
+
+
+
                 result = HttpRemote.getPost("http://192.168.1.126/php/bye.php", "");
                 JSONArray  obj = new JSONArray(result);
 
@@ -209,7 +229,7 @@ public class HomeActivity extends Activity {
                     valor.add(i,obj2.getString("nivel" + i ));
 
                 }
-               // String valor = obj.getString(Integer.parseInt("nivel"));
+                // String valor = obj.getString(Integer.parseInt("nivel"));
 
 
                 caixa.nivel = valor.get(0);
@@ -217,6 +237,8 @@ public class HomeActivity extends Activity {
 
 
                 Log.e("teste",caixa.getNivel());
+
+                mediu = true;
 
 
             } catch (Exception e) {
@@ -229,7 +251,9 @@ public class HomeActivity extends Activity {
 
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            /*pDialog.dismiss();*/
+
+            pDialog.dismiss();
+
         }
     }
 
