@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
@@ -36,46 +37,29 @@ public class HomeActivity extends Activity {
 
     StringBuilder sb;
     private Button btn;
+    private boolean mediu = false;
+
 
     EditText txtCaixa1, txtCaixa2, txtCisterna1;
     //NotificationCompat.Builder notification;
     //private static final int uniqueID = 010101;
 
 
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-
         try {
-            Thread.sleep(2000);
+            Thread.sleep(1500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        final SweetAlertDialog pDialog = new SweetAlertDialog(HomeActivity.this,
-                SweetAlertDialog.PROGRESS_TYPE);
-        pDialog.setTitleText("Aguarde !!!");
-        pDialog.setContentText("Procurando água.....");
-        pDialog.setCancelable(false);
-        pDialog.show();
 
-        new Thread() {
-            public void run() {
-                try {
+        seilaoque();
 
 
-                    seilaoque();
-
-                    Thread.sleep(1000);
-                } catch (Exception e) {
-                    Log.e("tag", e.getMessage());
-                }
-                // encerra progress dialog
-                pDialog.dismiss();
-            }
-        }.start();
 
 
 
@@ -194,7 +178,7 @@ public class HomeActivity extends Activity {
 
     class teste extends AsyncTask<Void, Void, String> {
 
-        SweetAlertDialog pDialog = new SweetAlertDialog(HomeActivity.this, SweetAlertDialog.PROGRESS_TYPE);
+        /*SweetAlertDialog pDialog = new SweetAlertDialog(HomeActivity.this, SweetAlertDialog.PROGRESS_TYPE);
 
         protected void onPreExecute() {
             super.onPreExecute();
@@ -203,7 +187,7 @@ public class HomeActivity extends Activity {
             pDialog.setCancelable(false);
             pDialog.show();
 
-        }
+        }*/
 
             @Override
         protected String doInBackground(Void... voids) {
@@ -245,7 +229,7 @@ public class HomeActivity extends Activity {
 
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            pDialog.dismiss();
+            /*pDialog.dismiss();*/
         }
     }
 
