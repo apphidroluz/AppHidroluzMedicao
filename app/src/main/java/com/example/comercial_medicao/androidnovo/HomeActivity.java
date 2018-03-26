@@ -245,7 +245,7 @@ public class HomeActivity extends Activity {
 
 
 
-                result = HttpRemote.getPost("http://192.168.1.126/php/bye.php", "");
+                result = HttpRemote.getPost("http://www.android.hidroluz.com.br/php/bye.php", "");
                 JSONArray  obj = new JSONArray(result);
 
                 for(int i=0; i < obj.length(); i++) {
