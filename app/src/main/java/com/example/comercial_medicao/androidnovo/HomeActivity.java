@@ -185,7 +185,7 @@ public class HomeActivity extends Activity {
     }
 
     public void medir(View v) {
-        Toast.makeText(this, "Hello", Toast.LENGTH_LONG).show();
+       
         Intent mIt  = getIntent();
         finish();
         startActivity(mIt);
@@ -220,14 +220,9 @@ public class HomeActivity extends Activity {
 
 
             pDialog.setTitleText("Aguarde !!!");
-            pDialog.setContentText("Processando login.....");
+            pDialog.setContentText("Atualizando Informações...");
             pDialog.setCancelable(false);
             pDialog.show();
-
-
-
-
-
 
         }
 
@@ -257,8 +252,8 @@ public class HomeActivity extends Activity {
                 // String valor = obj.getString(Integer.parseInt("nivel"));
 
 
-                caixa.nivel = valor.get(0);
-                caixa.nivel2 = valor.get(1);
+                caixa.nivel = valor.get(0).replaceAll("^0","");
+                caixa.nivel2 = valor.get(1).replaceAll("^0","");
 
 
                 Log.e("teste",caixa.getNivel());
@@ -303,7 +298,10 @@ public class HomeActivity extends Activity {
                    Log.e("TESTE","ESTOU RODANDO2");
                     Intent mIt  = getIntent();
                     finish();
-                    startActivity(mIt);
+
+                    new DadosArduino().execute();
+
+
 
                 } catch (Exception e) {
                     e.printStackTrace();
