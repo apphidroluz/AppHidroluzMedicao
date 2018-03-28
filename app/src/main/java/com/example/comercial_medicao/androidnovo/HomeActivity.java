@@ -213,8 +213,6 @@ public class HomeActivity extends Activity {
         final SweetAlertDialog pDialog = new SweetAlertDialog(HomeActivity.this,
                 SweetAlertDialog.PROGRESS_TYPE);
 
-
-
         protected void onPreExecute() {
             super.onPreExecute();
 
@@ -276,12 +274,9 @@ public class HomeActivity extends Activity {
 
         }
 
-
-
     }
 
     public void TredArduino(){
-
 
        /* try {
             Thread.sleep(10000);
@@ -301,8 +296,6 @@ public class HomeActivity extends Activity {
 
                     new DadosArduino().execute();
 
-
-
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -314,6 +307,31 @@ public class HomeActivity extends Activity {
 
     }
 
+/*  @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+    }
+*/
 
 }
 
