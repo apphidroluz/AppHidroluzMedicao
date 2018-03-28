@@ -58,6 +58,8 @@ public class HomeActivity extends Activity {
             }
         }
 
+        startService(new Intent(this, NotificationService.class));
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
