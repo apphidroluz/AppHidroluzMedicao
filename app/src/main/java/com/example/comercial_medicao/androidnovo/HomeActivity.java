@@ -38,6 +38,7 @@ public class HomeActivity extends Activity {
     StringBuilder sb;
     private Button btn;
     private boolean mediu = false;
+//    DadosArduino dadosArduino;     <-- Nova Classe
 
     EditText txtCaixa1, txtCaixa2;
 
@@ -62,6 +63,7 @@ public class HomeActivity extends Activity {
 
     }
 
+//    --> Atualizar entrada de dados para que venham da classe DadosArduino
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onStart() {
@@ -115,14 +117,16 @@ public class HomeActivity extends Activity {
                 mWaveLoadingView2.setWaveColor(getColor(R.color.azul_w));
             }
 
-            notificacaoVazio(caixa.getNivel(), caixa.getNivel2());
-            notificacaoBaixo(caixa.getNivel(), caixa.getNivel2());
-            notificacaoMax(Integer.parseInt(caixa.getNivel()), Integer.parseInt(caixa.getNivel2()));
+//            notificacaoVazio(caixa.getNivel(), caixa.getNivel2());
+//            notificacaoBaixo(caixa.getNivel(), caixa.getNivel2());
+//            notificacaoMax(Integer.parseInt(caixa.getNivel()), Integer.parseInt(caixa.getNivel2()));
 
         }
     }
 
-//---------------------------------- NOTIFICAÇÕES ------------------------------------------------
+/*
+    --> Notificações sendo movidas para outra classe: NotificationService
+
 //   NOTIFICAÇÃO VAZIO
     public void gerarNotificacaoVazio(Context ctx){
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(ctx);
@@ -185,6 +189,7 @@ public class HomeActivity extends Activity {
             gerarNotificacaoMax(getApplicationContext());
         }
     }
+*/
 
     public void medir(View v) {
        
@@ -209,6 +214,9 @@ public class HomeActivity extends Activity {
         startActivity(it);
         finish();
     }
+
+/*
+   --> Movendo a subClasse DadosArduino para a nova classe DadosArduino...
 
     class DadosArduino extends AsyncTask<Void, Void, String> {
 
@@ -277,6 +285,7 @@ public class HomeActivity extends Activity {
         }
 
     }
+*/
 
     public void TredArduino(){
 
@@ -309,31 +318,7 @@ public class HomeActivity extends Activity {
 
     }
 
-/*  @Override
-    protected void onResume() {
-        super.onResume();
-    }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-    }
-*/
 
 }
 

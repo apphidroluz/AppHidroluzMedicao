@@ -18,7 +18,6 @@ import android.widget.Toast;
 import java.util.Timer;
 import java.util.TimerTask;
 
-
 public class NotificationService extends Service {
     @Nullable
     @Override
@@ -44,7 +43,6 @@ public class NotificationService extends Service {
     }
 
     private Timer mTimer;
-
     TimerTask timerTask = new TimerTask() {
         @Override
         public void run() {
@@ -63,13 +61,14 @@ public class NotificationService extends Service {
     }
 
     public void notifiy() {
+
         Notification.Builder builder;
         Intent mIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(""));
         @SuppressLint("WrongConstant") PendingIntent pendingIntent = PendingIntent.getActivity(getBaseContext(),0,mIntent, Intent.FLAG_ACTIVITY_NEW_TASK);
         Context context = getApplicationContext();
         builder= new Notification.Builder(context)
-                .setContentTitle("I")
-                .setContentText("M")
+                .setContentTitle("AVISO DE NÍVEL")
+                .setContentText("Seu reservaório está ficando vazio")
                 .setContentIntent(pendingIntent)
                 .setDefaults(Notification.DEFAULT_SOUND)
                 .setAutoCancel(true)
@@ -81,5 +80,10 @@ public class NotificationService extends Service {
         notificationManager.notify(1,notification);
     }
 
+    // Criar notifições para os 3 níveis de aviso:
+    // 0% - Vazio
+    // 25% - Baixo
+    // 100% - Cheio / Risco de transbordo
+    // Aguardando DadosArduino para adaptar a leitura do valor
 
 }
