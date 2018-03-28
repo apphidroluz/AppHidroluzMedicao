@@ -38,7 +38,7 @@ public class HomeActivity extends Activity {
     StringBuilder sb;
     private Button btn;
     private boolean mediu = false;
-//    DadosArduino dadosArduino;     <-- Nova Classe
+//    DadosArduino dadosArduino;     <-- buscando nova Classe (?)
 
     EditText txtCaixa1, txtCaixa2;
 
@@ -63,7 +63,7 @@ public class HomeActivity extends Activity {
 
     }
 
-//    --> Atualizar entrada de dados para que venham da classe DadosArduino
+//  --> Atualizar entrada de dados para que venham da classe DadosArduino
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onStart() {
@@ -318,7 +318,7 @@ public class HomeActivity extends Activity {
 
     }
 
-
+// Verificar quais outros métodos deverão sofrer alterações devido às novas classes criadas
 
 }
 

@@ -13,6 +13,9 @@ import java.util.List;
 
 public class DadosArduino extends AsyncTask{
 
+    // Não esrevi o código dessa classe, foi uma cópia do que estava na SubClasse para começarmos a
+    // fazer as modificações que forem aparecendo...
+
     Caixas caixa;
     private boolean mediu = false;
 
@@ -40,8 +43,6 @@ public class DadosArduino extends AsyncTask{
         }
         return valor;
     }
-
-
 
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
