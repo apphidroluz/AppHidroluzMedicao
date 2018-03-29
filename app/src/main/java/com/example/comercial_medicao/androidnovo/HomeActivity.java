@@ -46,9 +46,26 @@ public class HomeActivity extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        TredArduino();
+        ConexaoTest funcao = new ConexaoTest();
+        if (!funcao.netWorkdisponibilidade(this)) {
 
-        new DadosArduino().execute();
+
+            Toast.makeText(this, "Sem conexão com rede, verifique seu sinal",
+                    Toast.LENGTH_LONG).show();
+
+            Intent it = new Intent(getApplicationContext(), MainActivity.class);
+
+            startActivity(it);
+
+        }else {
+
+          //  TredArduino();
+
+            new DadosArduino().execute();
+
+        }
+
+
 
         while(mediu == false){
             try {
@@ -117,15 +134,14 @@ public class HomeActivity extends Activity {
                 mWaveLoadingView2.setWaveColor(getColor(R.color.azul_w));
             }
 
-//            notificacaoVazio(caixa.getNivel(), caixa.getNivel2());
-//            notificacaoBaixo(caixa.getNivel(), caixa.getNivel2());
-//            notificacaoMax(Integer.parseInt(caixa.getNivel()), Integer.parseInt(caixa.getNivel2()));
+           /*notificacaoVazio(caixa.getNivel(), caixa.getNivel2());
+           notificacaoBaixo(caixa.getNivel(), caixa.getNivel2());
+            notificacaoMax(Integer.parseInt(caixa.getNivel()), Integer.parseInt(caixa.getNivel2()));*/
 
         }
     }
 
-/*
-    --> Notificações sendo movidas para outra classe: NotificationService
+
 
 //   NOTIFICAÇÃO VAZIO
     public void gerarNotificacaoVazio(Context ctx){
@@ -189,7 +205,7 @@ public class HomeActivity extends Activity {
             gerarNotificacaoMax(getApplicationContext());
         }
     }
-*/
+
 
     public void medir(View v) {
        
@@ -215,8 +231,8 @@ public class HomeActivity extends Activity {
         finish();
     }
 
-/*
-   --> Movendo a subClasse DadosArduino para a nova classe DadosArduino...
+
+  // --> Movendo a subClasse DadosArduino para a nova classe DadosArduino...
 
     class DadosArduino extends AsyncTask<Void, Void, String> {
 
@@ -285,7 +301,7 @@ public class HomeActivity extends Activity {
         }
 
     }
-*/
+
 
     public void TredArduino(){
 

@@ -11,40 +11,46 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DadosArduino extends AsyncTask{
+public class DadosArduino extends  AsyncTask{
 
     // Não esrevi o código dessa classe, foi uma cópia do que estava na SubClasse para começarmos a
     // fazer as modificações que forem aparecendo...
-
-    Caixas caixa;
-    private boolean mediu = false;
 
     // transformar os dados que são obtidos em itens para serem acessados na outra classe...
     // lista ou dados individuais?!
 
     @Override
     protected Object doInBackground(Object[] objects) {
-        caixa = new Caixas();
-        List<String> valor = new ArrayList<>();
+        List<String> valores = new ArrayList<>();
         String result = null;
         try {
             result = HttpRemote.getPost("http://www.android.hidroluz.com.br/php/bye.php", "");
             JSONArray obj = new JSONArray(result);
             for(int i=0; i < obj.length(); i++) {
                 JSONObject obj2 = obj.getJSONObject(i);
-                valor.add(i,obj2.getString("nivel" + i ));
+                valores.add(i,obj2.getString("nivel" + i ));
             }
-            caixa.nivel = valor.get(0).replaceAll("^0","");
-            caixa.nivel2 = valor.get(1).replaceAll("^0","");
-            Log.e("teste",caixa.getNivel());
-            mediu = true;
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return valor;
+        return valores;
     }
 
-    protected void onPostExecute(String s) {
-        super.onPostExecute(s);
+
+
+
+    public static void main(String[] args) {
+
+        List<String> valores = new ArrayList<>();
+
+
+      new DadosArduino().execute();
+
+    Log.e("Resultado", valores.get(0));
+
     }
+
+
+
 }

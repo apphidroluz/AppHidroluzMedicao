@@ -9,7 +9,6 @@ import java.net.URLConnection;
 
 public class Conexao {
 
-
     public InputStream OpenHttpConnection(String urlString) throws IOException {
         InputStream in = null;
         URLConnection conn = new URL(urlString).openConnection();
