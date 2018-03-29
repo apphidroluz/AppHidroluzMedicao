@@ -83,20 +83,19 @@ public class NotificationService extends Service {
         if (!funcao.netWorkdisponibilidade(this)) {
 
 
+            Toast.makeText(this, "Sem conexão com rede, verifique seu sinal",
+                    Toast.LENGTH_LONG).show();
 
-            TimerTask timerTask = new TimerTask() {
-                @Override
-                public void run() {
-                    notifiy();
-                }
-            };
+            Intent it = new Intent(getApplicationContext(), MainActivity.class);
 
+            startActivity(it);
 
         }else {
 
             new DadosArduino().execute();
 
         }
+
 
 
 
@@ -109,13 +108,13 @@ public class NotificationService extends Service {
             }
         }
 
-        notificacaoVazio(caixa.getNivel(), caixa.getNivel2());
+        notificacoes(caixa.getNivel(), caixa.getNivel2());
 
     }
 
     //   NOTIFICAÇÃO VAZIO
 
-    public void notificacaoVazio(String nv1, String nv2){
+    public void notificacoes(String nv1, String nv2){
 
 
         if(nv1.equals("00")||nv2.equals("00")){

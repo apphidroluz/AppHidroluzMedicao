@@ -46,25 +46,9 @@ public class HomeActivity extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ConexaoTest funcao = new ConexaoTest();
-        if (!funcao.netWorkdisponibilidade(this)) {
-
-
-            Toast.makeText(this, "Sem conexão com rede, verifique seu sinal",
-                    Toast.LENGTH_LONG).show();
-
-            Intent it = new Intent(getApplicationContext(), MainActivity.class);
-
-            startActivity(it);
-
-        }else {
-
           //  TredArduino();
 
             new DadosArduino().execute();
-
-        }
-
 
 
         while(mediu == false){
@@ -142,7 +126,7 @@ public class HomeActivity extends Activity {
     }
 
 
-
+/*
 //   NOTIFICAÇÃO VAZIO
     public void gerarNotificacaoVazio(Context ctx){
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(ctx);
@@ -204,14 +188,30 @@ public class HomeActivity extends Activity {
         if(nv1 == 100 || nv2 == 100){
             gerarNotificacaoMax(getApplicationContext());
         }
-    }
+    }*/
 
 
     public void medir(View v) {
-       
-        Intent mIt  = getIntent();
-        finish();
-        startActivity(mIt);
+
+        ConexaoTest funcao = new ConexaoTest();
+        if (!funcao.netWorkdisponibilidade(this)) {
+
+
+            Toast.makeText(this, "Sem conexão com rede, verifique seu sinal",
+                    Toast.LENGTH_LONG).show();
+
+            Intent it = new Intent(getApplicationContext(), MainActivity.class);
+
+            startActivity(it);
+
+        }else {
+
+            Intent mIt  = getIntent();
+            finish();
+            startActivity(mIt);
+        }
+
+
     }
 
     public PendingIntent criarContent(Context ctx) {
