@@ -107,19 +107,7 @@ public class NotificationService extends Service {
 
     public void notifiy() {
 
-        ConexaoTest funcao = new ConexaoTest();
-        if (!funcao.netWorkdisponibilidade(this)) {
-
-
-
-
-        }else {
-
-            new DadosArduino().execute();
-
-        }
-
-
+        new DadosArduino().execute();
 
 
         while(mediu == false){
@@ -140,15 +128,15 @@ public class NotificationService extends Service {
     public void notificacoes(String nv1, String nv2){
 
 
-        if(nv1.equals("00")||nv2.equals("00")){
+        if(nv1 != null && nv1.equals("00") || nv2 != null && nv2.equals("00")){
             gerarNotificacaoVazio(getApplicationContext());
         }
 
-        if(nv1.equals("25")||nv2.equals("25")){
+        if(nv1 != null && nv1.equals("25") || nv2 != null && nv2.equals("25")){
             gerarNotificacaoBaixo(getApplicationContext());
         }
 
-        if(nv1.equals("105")||nv2.equals("105")){
+        if(nv1 != null && nv1.equals("105") || nv2 != null && nv2.equals("105")){
             gerarNotificacaoMax(getApplicationContext());
         }
     }
