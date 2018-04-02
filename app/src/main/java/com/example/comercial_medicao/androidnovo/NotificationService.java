@@ -74,7 +74,7 @@ public class NotificationService extends Service {
     public void onCreate() {
         super.onCreate();
         mTimer = new Timer();
-        mTimer.schedule(timerTask,2000,2 * 1000);
+        mTimer.schedule(timerTask,0,600000);
     }
 
     @Override
@@ -109,7 +109,6 @@ public class NotificationService extends Service {
 
         new DadosArduino().execute();
 
-
         while(mediu == false){
             try {
                 Thread.sleep(100);
@@ -118,15 +117,12 @@ public class NotificationService extends Service {
                 e.printStackTrace();
             }
         }
-
         notificacoes(caixa.getNivel(), caixa.getNivel2());
-
     }
 
     //   NOTIFICAÇÃO VAZIO
 
     public void notificacoes(String nv1, String nv2){
-
 
         if(nv1 != null && nv1.equals("00") || nv2 != null && nv2.equals("00")){
             gerarNotificacaoVazio(getApplicationContext());
@@ -167,11 +163,9 @@ public class NotificationService extends Service {
                 .setVibrate(new long[]{100, 500, 200, 800})
                 .setWhen(System.currentTimeMillis())
                 .setContentIntent(criarContent(ctx));
-
         NotificationManagerCompat nmc = NotificationManagerCompat.from(ctx);
         nmc.notify(341, mBuilder.build());
     }
-
 
     //   NOTIFICAÇÃO CHEIO
     public void gerarNotificacaoMax(Context ctx){
@@ -189,16 +183,14 @@ public class NotificationService extends Service {
         nmc.notify(341, mBuilder.build());
     }
 
-
     public PendingIntent criarContent(Context ctx) {
-        Intent it = new Intent(ctx, NotificationService.class);
+        Intent it = new Intent(ctx, HomeActivity.class);
         it.putExtra("titulo", "teste");
 
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(ctx);
         stackBuilder.addNextIntent(it);
         return stackBuilder.getPendingIntent(1001, PendingIntent.FLAG_UPDATE_CURRENT);
     }
-
 
     // Criar notifições para os 3 níveis de aviso:
     // 0% - Vazio
@@ -208,68 +200,42 @@ public class NotificationService extends Service {
 
     class DadosArduino extends AsyncTask<Void, Void, String> {
 
-
-
         protected void onPreExecute() {
             super.onPreExecute();
-
-
-
-
         }
 
         @Override
         protected String doInBackground(Void... voids) {
 
             caixa = new Caixas();
-
-
             List<String> valor = new ArrayList<>();
-
-
             String result = null;
+
             try {
-
-
-
                 result = HttpRemote.getPost("http://www.android.hidroluz.com.br/php/bye.php", "");
                 JSONArray obj = new JSONArray(result);
 
                 for(int i=0; i < obj.length(); i++) {
                     JSONObject obj2 = obj.getJSONObject(i);
-
                     valor.add(i,obj2.getString("nivel" + i ));
-
                 }
                 // String valor = obj.getString(Integer.parseInt("nivel"));
 
-
                 caixa.nivel = valor.get(0).replaceAll("^0","");
                 caixa.nivel2 = valor.get(1).replaceAll("^0","");
-
-
                 mediu = true;
 
                 Log.e("teste",caixa.getNivel());
 
-
-
-
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
-
             return result;
         }
 
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-
-
-
         }
-
     }
 
 }
