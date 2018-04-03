@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -15,6 +16,7 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -38,6 +40,7 @@ public class HomeActivity extends Activity {
     StringBuilder sb;
     private Button btn;
     private boolean mediu = false;
+    private static final String PREF_NAME = "dadoslogin";
 //    DadosArduino dadosArduino;     <-- buscando nova Classe (?)
 
     EditText txtCaixa1, txtCaixa2;
@@ -224,11 +227,57 @@ public class HomeActivity extends Activity {
     }
 
     public void sair(View v) {
+
+        SharedPreferences settings = getSharedPreferences(PREF_NAME, 0);
+        settings.edit().clear().commit();
         //Toast.makeText(this, "Ainda não é possivel sair.", Toast.LENGTH_LONG).show();
         //notification.setSmallIcon(R.mipmap.ic_launcher);
-        Intent it = new Intent(getApplicationContext(), MainActivity.class);
+        onDetach();
+    }
+
+    public void onDetach() {
+            new SweetAlertDialog(HomeActivity.this, SweetAlertDialog.SUCCESS_TYPE).
+                    setTitleText("Saida").setContentText("Você realmente deseja sair ?")
+                    .setConfirmText("Sim").setCancelText("Não")
+                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+
+                            SharedPreferences settings = getSharedPreferences(
+                                    PREF_NAME, 0);
+                            settings.edit().remove("logado").commit();
+                            settings.edit().remove("UNI").commit();
+
+                            String adm = settings.getString("ADM", "");
+                            HomeActivity.this.finish();
+
+                            if (adm.equalsIgnoreCase("1")) {
+                                startActivity(new Intent(getBaseContext(),
+                                        HomeActivity.class));
+
+                            } else {
+                                startActivity(new Intent(getBaseContext(),
+                                        MainActivity.class));
+                            }
+                        }
+                    }).showCancelButton(true).setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                @Override
+                public void onClick(SweetAlertDialog sDialog) {
+                    sDialog.cancel();
+                }
+            }).show();
+        /*Intent it = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(it);
-        finish();
+        finish();*/
+
+    }
+
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+
+               onDetach();
+        }
+        return false;
     }
 
 
