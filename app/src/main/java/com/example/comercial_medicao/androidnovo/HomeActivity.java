@@ -228,8 +228,7 @@ public class HomeActivity extends Activity {
 
     public void sair(View v) {
 
-        SharedPreferences settings = getSharedPreferences(PREF_NAME, 0);
-        settings.edit().clear().commit();
+
         //Toast.makeText(this, "Ainda não é possivel sair.", Toast.LENGTH_LONG).show();
         //notification.setSmallIcon(R.mipmap.ic_launcher);
         onDetach();
@@ -246,19 +245,13 @@ public class HomeActivity extends Activity {
                             SharedPreferences settings = getSharedPreferences(
                                     PREF_NAME, 0);
                             settings.edit().remove("logado").commit();
-                            settings.edit().remove("UNI").commit();
 
-                            String adm = settings.getString("ADM", "");
                             HomeActivity.this.finish();
 
-                            if (adm.equalsIgnoreCase("1")) {
-                                startActivity(new Intent(getBaseContext(),
-                                        HomeActivity.class));
 
-                            } else {
                                 startActivity(new Intent(getBaseContext(),
                                         MainActivity.class));
-                            }
+
                         }
                     }).showCancelButton(true).setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
                 @Override

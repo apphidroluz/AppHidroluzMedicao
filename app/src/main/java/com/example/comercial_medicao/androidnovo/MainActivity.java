@@ -30,7 +30,14 @@ public class MainActivity extends Activity {
         SharedPreferences settings = getSharedPreferences(PREF_NAME,
                 MODE_PRIVATE);
         String logado = settings.getString("logado", "0");
+        String login = settings.getString("login", "");
+        String senha = settings.getString("senha", "");
 
+        EditText lclogin = (EditText) findViewById(R.id.editUser);
+        EditText lcsenha = (EditText) findViewById(R.id.editPass);
+
+        lclogin.setText(login);
+        lcsenha.setText(senha);
 
         if (logado.equals("1")) {
             Intent it = new Intent(getApplicationContext(),
@@ -41,7 +48,6 @@ public class MainActivity extends Activity {
 
     public void logar() throws InterruptedException {
 
-
         EditText lclogin = (EditText) findViewById(R.id.editUser);
         EditText lcsenha = (EditText) findViewById(R.id.editPass);
         login = lclogin.getText().toString();
@@ -51,10 +57,11 @@ public class MainActivity extends Activity {
 
             SharedPreferences settings = getSharedPreferences(
                     PREF_NAME, MODE_PRIVATE);
-            SharedPreferences.Editor editor = settings
-                    .edit();
+            SharedPreferences.Editor editor = settings.edit();
 
              editor.putString("logado", "1");
+             editor.putString("login", login);
+             editor.putString("senha", senha);
 
             editor.commit();
 
