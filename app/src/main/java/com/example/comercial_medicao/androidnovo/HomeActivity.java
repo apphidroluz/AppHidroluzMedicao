@@ -20,6 +20,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ontbee.legacyforks.cn.pedant.SweetAlert.SweetAlertDialog;
@@ -28,7 +29,9 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import me.itangqi.waveloadingview.WaveLoadingView;
@@ -36,7 +39,9 @@ import me.itangqi.waveloadingview.WaveLoadingView;
 public class HomeActivity extends Activity {
 
     Caixas caixa;
-
+    SimpleDateFormat simpleDateFormat;
+    Calendar calendar;
+    TextView atualizaData;
     StringBuilder sb;
     private Button btn;
     private boolean mediu = false;
@@ -48,12 +53,8 @@ public class HomeActivity extends Activity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
           //  TredArduino();
-
             new DadosArduino().execute();
-
-
         while(mediu == false){
             try {
              Thread.sleep(100);
@@ -63,8 +64,12 @@ public class HomeActivity extends Activity {
             }
         }
 
+        atualizaData = (TextView) findViewById(R.id.atualizaData);
+
         startService(new Intent(this, NotificationService.class));
 
+        simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        calendar = Calendar.getInstance();
     }
 
 //  --> Atualizar entrada de dados para que venham da classe DadosArduino
@@ -128,72 +133,6 @@ public class HomeActivity extends Activity {
         }
     }
 
-
-/*
-//   NOTIFICAÇÃO VAZIO
-    public void gerarNotificacaoVazio(Context ctx){
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(ctx);
-        mBuilder.setAutoCancel(true)
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle("AVISO")
-                .setContentText("Seu reservatório está vazio")
-                .setLights(Color.WHITE, 1000, 5000)
-                .setVibrate(new long[]{100, 500, 200, 800})
-                .setWhen(System.currentTimeMillis())
-                .setContentIntent(criarContent(ctx));
-
-        NotificationManagerCompat nmc = NotificationManagerCompat.from(ctx);
-        nmc.notify(340, mBuilder.build());
-    }
-    public void notificacaoVazio(String nv1, String nv2){
-        if(nv1.equals("00")||nv2.equals("00")){
-            gerarNotificacaoVazio(getApplicationContext());
-        }
-    }
-
-//   NOTIFICAÇÃO BAIXO
-    public void gerarNotificacaoBaixo(Context ctx){
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(ctx);
-        mBuilder.setAutoCancel(true)
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle("AVISO")
-                .setContentText("O nível do reservatório está baixo")
-                .setLights(Color.WHITE, 1000, 5000)
-                .setVibrate(new long[]{100, 500, 200, 800})
-                .setWhen(System.currentTimeMillis())
-                .setContentIntent(criarContent(ctx));
-
-        NotificationManagerCompat nmc = NotificationManagerCompat.from(ctx);
-        nmc.notify(341, mBuilder.build());
-    }
-    public void notificacaoBaixo(String nv1, String nv2){
-        if(nv1.equals("25")||nv2.equals("25")){
-            gerarNotificacaoBaixo(getApplicationContext());
-        }
-    }
-
-//   NOTIFICAÇÃO CHEIO
-    public void gerarNotificacaoMax(Context ctx){
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(ctx);
-        mBuilder.setAutoCancel(true)
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle("AVISO")
-                .setContentText("Seu reservatório está cheio")
-                .setLights(Color.WHITE, 1000, 5000)
-                .setVibrate(new long[]{100, 500, 200, 800})
-                .setWhen(System.currentTimeMillis())
-                .setContentIntent(criarContent(ctx));
-
-        NotificationManagerCompat nmc = NotificationManagerCompat.from(ctx);
-        nmc.notify(341, mBuilder.build());
-    }
-    public void notificacaoMax(int nv1, int nv2){
-        if(nv1 == 100 || nv2 == 100){
-            gerarNotificacaoMax(getApplicationContext());
-        }
-    }*/
-
-
     public void medir(View v) {
 
         ConexaoTest funcao = new ConexaoTest();
@@ -206,6 +145,7 @@ public class HomeActivity extends Activity {
             Intent it = new Intent(getApplicationContext(), MainActivity.class);
 
             startActivity(it);
+
 
         }else {
 
@@ -377,6 +317,71 @@ public class HomeActivity extends Activity {
     }
 
 // Verificar quais outros métodos deverão sofrer alterações devido às novas classes criadas
+
+
+/*
+//   NOTIFICAÇÃO VAZIO
+    public void gerarNotificacaoVazio(Context ctx){
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(ctx);
+        mBuilder.setAutoCancel(true)
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentTitle("AVISO")
+                .setContentText("Seu reservatório está vazio")
+                .setLights(Color.WHITE, 1000, 5000)
+                .setVibrate(new long[]{100, 500, 200, 800})
+                .setWhen(System.currentTimeMillis())
+                .setContentIntent(criarContent(ctx));
+
+        NotificationManagerCompat nmc = NotificationManagerCompat.from(ctx);
+        nmc.notify(340, mBuilder.build());
+    }
+    public void notificacaoVazio(String nv1, String nv2){
+        if(nv1.equals("00")||nv2.equals("00")){
+            gerarNotificacaoVazio(getApplicationContext());
+        }
+    }
+
+//   NOTIFICAÇÃO BAIXO
+    public void gerarNotificacaoBaixo(Context ctx){
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(ctx);
+        mBuilder.setAutoCancel(true)
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentTitle("AVISO")
+                .setContentText("O nível do reservatório está baixo")
+                .setLights(Color.WHITE, 1000, 5000)
+                .setVibrate(new long[]{100, 500, 200, 800})
+                .setWhen(System.currentTimeMillis())
+                .setContentIntent(criarContent(ctx));
+
+        NotificationManagerCompat nmc = NotificationManagerCompat.from(ctx);
+        nmc.notify(341, mBuilder.build());
+    }
+    public void notificacaoBaixo(String nv1, String nv2){
+        if(nv1.equals("25")||nv2.equals("25")){
+            gerarNotificacaoBaixo(getApplicationContext());
+        }
+    }
+
+//   NOTIFICAÇÃO CHEIO
+    public void gerarNotificacaoMax(Context ctx){
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(ctx);
+        mBuilder.setAutoCancel(true)
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentTitle("AVISO")
+                .setContentText("Seu reservatório está cheio")
+                .setLights(Color.WHITE, 1000, 5000)
+                .setVibrate(new long[]{100, 500, 200, 800})
+                .setWhen(System.currentTimeMillis())
+                .setContentIntent(criarContent(ctx));
+
+        NotificationManagerCompat nmc = NotificationManagerCompat.from(ctx);
+        nmc.notify(341, mBuilder.build());
+    }
+    public void notificacaoMax(int nv1, int nv2){
+        if(nv1 == 100 || nv2 == 100){
+            gerarNotificacaoMax(getApplicationContext());
+        }
+    }*/
 
 }
 

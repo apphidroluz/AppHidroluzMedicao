@@ -43,7 +43,7 @@ tools:context="com.example.comercial_medicao.androidnovo.HomeActivity">
 -->
         <TextView
             android:layout_width="250dp"
-            android:layout_height="50dp"
+            android:layout_height="35dp"
             android:text="Villa Leone"
             android:textAllCaps="true"
             android:textStyle="bold"
@@ -72,19 +72,36 @@ tools:context="com.example.comercial_medicao.androidnovo.HomeActivity">
         android:textColor="@color/branco"
         android:textSize="18dp"
         style="@style/texto9"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:id="@+id/btnmedir"
         android:onClick="medir"/>
-    <!-- Horario -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Última medição às 16:00 - 15/03/2018"
-        android:textColor="@color/cinza_d"
-        android:textSize="15dp"
-        android:gravity="center"
-        android:layout_marginBottom="5dp"
-        />
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="5dp">
+        <!-- Horario -->
+        <TextView
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:text="Última medição :"
+            android:textColor="@color/cinza_d"
+            android:textSize="15dp"
+            android:gravity="right"
+            />
+        <TextView
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:text="data e hora"
+            android:textColor="@color/cinza_d"
+            android:textSize="15dp"
+            android:gravity="left"
+            android:layout_marginLeft="5dp"
+            android:id="@+id/atualizaData"
+            />
+    </LinearLayout>
     <!-- Detalhes -->
     <ScrollView
         android:layout_width="match_parent"
