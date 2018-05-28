@@ -15,6 +15,7 @@ import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -36,12 +37,14 @@ import java.util.List;
 
 import me.itangqi.waveloadingview.WaveLoadingView;
 
-public class HomeActivity extends Activity {
+public class HomeActivity extends AppCompatActivity {
+
+    Calendar calender;
+    SimpleDateFormat simpleDateFormat;
+    String Date;
+    TextView viewDateTime;
 
     Caixas caixa;
-    SimpleDateFormat simpleDateFormat;
-    Calendar calendar;
-    TextView atualizaData;
     StringBuilder sb;
     private Button btn;
     private boolean mediu = false;
@@ -53,7 +56,21 @@ public class HomeActivity extends Activity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-          //  TredArduino();
+
+
+
+
+        /*atualizaData = (TextView) findViewById(R.id.atualizaData);
+        simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        calendar = Calendar.getInstance();
+        attData = simpleDateFormat.format(calendar.getTime());
+        Log.e("teste", attData);
+        atualizaData.setText(attData);*/
+
+
+
+
+          //  ThredArduino();
             new DadosArduino().execute();
         while(mediu == false){
             try {
@@ -64,12 +81,9 @@ public class HomeActivity extends Activity {
             }
         }
 
-        atualizaData = (TextView) findViewById(R.id.atualizaData);
-
         startService(new Intent(this, NotificationService.class));
 
-        simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-        calendar = Calendar.getInstance();
+
     }
 
 //  --> Atualizar entrada de dados para que venham da classe DadosArduino
@@ -80,6 +94,14 @@ public class HomeActivity extends Activity {
         setContentView(R.layout.activity_home);
         txtCaixa1 = (EditText) findViewById(R.id.txtCaixa1);
         txtCaixa2 = (EditText) findViewById(R.id.txtCaixa2);
+
+        viewDateTime = (TextView) findViewById(R.id.viewDateTime);
+        calender = Calendar.getInstance();
+        simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+
+        Date =simpleDateFormat.format(calender.getTime());
+
+        viewDateTime.setText(Date);
 
         if(caixa.getNivel() != null) {
 

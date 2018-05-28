@@ -84,23 +84,24 @@ tools:context="com.example.comercial_medicao.androidnovo.HomeActivity">
         android:layout_marginBottom="5dp">
         <!-- Horario -->
         <TextView
-            android:layout_width="170dp"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:text="Última medição :"
-            android:textColor="@color/cinza_d"
-            android:textSize="15dp"
             android:gravity="right"
-            />
-        <TextView
-            android:layout_width="170dp"
-            android:layout_height="wrap_content"
-            android:text="data e hora"
+            android:text="Última medição :"
+            android:textAlignment="textStart"
             android:textColor="@color/cinza_d"
-            android:textSize="15dp"
-            android:gravity="left"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/viewDateTime"
+            android:layout_width="190dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:id="@+id/atualizaData"
-            />
+            android:gravity="left"
+            android:hint="data e hora"
+            android:textAlignment="center"
+            android:textColor="@color/cinza_d"
+            android:textSize="15dp" />
     </LinearLayout>
     <!-- Detalhes -->
     <ScrollView
