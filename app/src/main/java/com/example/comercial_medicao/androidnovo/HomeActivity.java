@@ -108,6 +108,28 @@ public class HomeActivity extends AppCompatActivity {
             //Caixa d'água 1
             WaveLoadingView mWaveLoadingView = (WaveLoadingView) findViewById(R.id.waveLoadingView);
             mWaveLoadingView.setShapeType(WaveLoadingView.ShapeType.SQUARE);
+            if (Integer.parseInt(caixa.getNivel()) == 100) {
+                mWaveLoadingView.setProgressValue(97);
+            } else if (Integer.parseInt(caixa.getNivel()) > 100){
+                mWaveLoadingView.setProgressValue(103);
+            } else {
+                mWaveLoadingView.setProgressValue(Integer.parseInt(caixa.getNivel()));
+            }
+            if(Integer.parseInt(caixa.getNivel()) > 100) {
+                mWaveLoadingView.setCenterTitle("Atenção");
+            }else {
+                mWaveLoadingView.setCenterTitle(caixa.getNivel() + "%");
+            }
+            mWaveLoadingView.setAmplitudeRatio(60);
+            mWaveLoadingView.setTopTitleStrokeWidth(3);
+            mWaveLoadingView.setAnimDuration(3000);
+            if (Integer.parseInt(caixa.getNivel()) < 49 || Integer.parseInt(caixa.getNivel()) > 100 ) {
+                mWaveLoadingView.setWaveColor(getColor(R.color.critico));
+            } else {
+                mWaveLoadingView.setWaveColor(getColor(R.color.azul_w));
+            }
+            /*WaveLoadingView mWaveLoadingView = (WaveLoadingView) findViewById(R.id.waveLoadingView);
+            mWaveLoadingView.setShapeType(WaveLoadingView.ShapeType.SQUARE);
             mWaveLoadingView.startAnimation();
             if (Integer.parseInt(caixa.getNivel()) == 100) {
                 mWaveLoadingView.setProgressValue(97);
@@ -122,7 +144,7 @@ public class HomeActivity extends AppCompatActivity {
                 mWaveLoadingView.setWaveColor(getColor(R.color.critico));
             } else {
                 mWaveLoadingView.setWaveColor(getColor(R.color.azul_w));
-            }
+            }*/
 
             //Caixa d'água 2
             WaveLoadingView mWaveLoadingView2 = (WaveLoadingView) findViewById(R.id.waveLoadingView2);
