@@ -27,6 +27,8 @@
         <activity
             android:name=".HomeActivity"
             android:theme="@style/AppTheme"/>
+        <activity android:name=".Tela_erro"
+            android:theme="@style/AppTheme"/>
         <service android:name=".NotificationService" android:exported="false"/>
         <receiver android:name=".BootClass">
             <intent-filter>
