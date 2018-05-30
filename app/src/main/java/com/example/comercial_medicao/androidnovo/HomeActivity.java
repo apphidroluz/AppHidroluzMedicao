@@ -51,7 +51,6 @@ public class HomeActivity extends AppCompatActivity {
     private Button btn;
     private boolean mediu = false;
     private static final String PREF_NAME = "dadoslogin";
-//    DadosArduino dadosArduino;     <-- buscando nova Classe (?)
 
     EditText txtCaixa1, txtCaixa2;
 
@@ -88,7 +87,6 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
-//  --> Atualizar entrada de dados para que venham da classe DadosArduino
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onStart() {
@@ -143,7 +141,7 @@ public class HomeActivity extends AppCompatActivity {
 
 
                 //Caixa d'água 2
-                WaveLoadingView mWaveLoadingView2 = (WaveLoadingView) findViewById(R.id.waveLoadingView2);
+            WaveLoadingView mWaveLoadingView2 = (WaveLoadingView) findViewById(R.id.waveLoadingView2);
                 mWaveLoadingView2.setShapeType(WaveLoadingView.ShapeType.SQUARE);
                 if (Integer.parseInt(caixa.getNivel2()) == 100) {
                     mWaveLoadingView2.setProgressValue(97);
@@ -249,9 +247,6 @@ public class HomeActivity extends AppCompatActivity {
         }
         return false;
     }
-
-
-  // --> Movendo a subClasse DadosArduino para a nova classe DadosArduino...
 
     class DadosArduino extends AsyncTask<Void, Void, String> {
 
@@ -364,8 +359,6 @@ public class HomeActivity extends AppCompatActivity {
         t.start();
 
     }
-
-// Verificar quais outros métodos deverão sofrer alterações devido às novas classes criadas
 
 
 }
