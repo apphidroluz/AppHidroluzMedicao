@@ -74,7 +74,7 @@ public class NotificationService extends Service {
     public void onCreate() {
         super.onCreate();
         mTimer = new Timer();
-        mTimer.schedule(timerTask,0,600000);
+        mTimer.schedule(timerTask,0,100);
     }
 
     @Override

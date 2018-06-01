@@ -342,7 +342,7 @@ public class HomeActivity extends AppCompatActivity {
 
                 try {
                     Log.e("TESTE","ESTOU RODANDO1");
-                   Thread.sleep(600000);
+                   Thread.sleep(100);
                    Log.e("TESTE","ESTOU RODANDO2");
                     Intent mIt  = getIntent();
                     finish();
