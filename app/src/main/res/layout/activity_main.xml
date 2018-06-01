@@ -102,5 +102,4 @@ tools:context="com.example.comercial_medicao.androidnovo.MainActivity">
     android:textColorLink="#ff000000"
     />
 
-
 </LinearLayout>
