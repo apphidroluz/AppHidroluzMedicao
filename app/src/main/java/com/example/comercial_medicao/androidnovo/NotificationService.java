@@ -2,6 +2,7 @@ package com.example.comercial_medicao.androidnovo;
 
 import android.annotation.SuppressLint;
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -27,6 +28,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -138,7 +140,7 @@ public class NotificationService extends Service {
     }
 
     public void gerarNotificacaoVazio(Context ctx){
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(ctx);
+        Notification.Builder mBuilder = new Notification.Builder(ctx);
         mBuilder.setAutoCancel(true)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle("AVISO")
@@ -148,8 +150,18 @@ public class NotificationService extends Service {
                 .setWhen(System.currentTimeMillis())
                 .setContentIntent(criarContent(ctx));
 
-        NotificationManagerCompat nmc = NotificationManagerCompat.from(ctx);
-        nmc.notify(340, mBuilder.build());
+        NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotificationManager.notify(340, mBuilder.build());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel("vazio_01",
+                    "Notificação de vazio",
+                    NotificationManager.IMPORTANCE_DEFAULT);
+            mNotificationManager.createNotificationChannel(channel);
+        }
+
+
+
+
     }
 
     //   NOTIFICAÇÃO BAIXO
@@ -180,7 +192,7 @@ public class NotificationService extends Service {
                 .setContentIntent(criarContent(ctx));
 
         NotificationManagerCompat nmc = NotificationManagerCompat.from(ctx);
-        nmc.notify(341, mBuilder.build());
+        nmc.notify(342, mBuilder.build());
     }
 
     public PendingIntent criarContent(Context ctx) {
