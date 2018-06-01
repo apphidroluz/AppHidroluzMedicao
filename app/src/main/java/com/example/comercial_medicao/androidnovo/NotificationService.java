@@ -28,7 +28,6 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -142,22 +141,18 @@ public class NotificationService extends Service {
     public void gerarNotificacaoVazio(Context ctx){
         Notification.Builder mBuilder = new Notification.Builder(ctx);
         mBuilder.setAutoCancel(true)
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSmallIcon(R.mipmap.ic_launcher_waterbox)
                 .setContentTitle("AVISO")
                 .setContentText("Seu reservatório está vazio")
                 .setLights(Color.WHITE, 1000, 5000)
                 .setVibrate(new long[]{100, 500, 200, 800})
                 .setWhen(System.currentTimeMillis())
-                .setContentIntent(criarContent(ctx));
+                .setContentIntent(criarContent(ctx))
+                .setPriority(Notification.PRIORITY_HIGH);
 
-        NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        mNotificationManager.notify(340, mBuilder.build());
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel("vazio_01",
-                    "Notificação de vazio",
-                    NotificationManager.IMPORTANCE_DEFAULT);
-            mNotificationManager.createNotificationChannel(channel);
-        }
+        NotificationManager nmc = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        nmc.notify(340, mBuilder.build());
 
 
 
