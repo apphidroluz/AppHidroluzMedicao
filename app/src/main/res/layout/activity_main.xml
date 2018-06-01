@@ -36,7 +36,8 @@ tools:context="com.example.comercial_medicao.androidnovo.MainActivity">
     android:ems="10"
     android:hint="@string/DigUsu"
     android:layout_marginTop="15dp"
-    android:backgroundTint="@color/fonte"
+    android:textColor="@color/fonte"
+    android:backgroundTint="#ff000000"
     >
 
     <requestFocus />
@@ -51,7 +52,8 @@ tools:context="com.example.comercial_medicao.androidnovo.MainActivity">
     android:hint="@string/DigSen"
     android:inputType="textPassword"
     android:layout_marginTop="15dp"
-    android:backgroundTint="@color/fonte"
+    android:textColor="@color/fonte"
+    android:backgroundTint="#ff000000"
     />
 
 <Button
@@ -96,7 +98,8 @@ tools:context="com.example.comercial_medicao.androidnovo.MainActivity">
     android:linksClickable="true"
     android:textSize="20dp"
     android:text="2199-9999"
-    android:textColorLink="@color/cinza_d"
+    android:textColor="@color/cinza_d"
+    android:textColorLink="#ff000000"
     />
 
 

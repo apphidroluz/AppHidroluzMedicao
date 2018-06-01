@@ -2,6 +2,7 @@ package com.example.comercial_medicao.androidnovo;
 
 import android.annotation.SuppressLint;
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -138,6 +139,12 @@ public class NotificationService extends Service {
     }
 
     public void gerarNotificacaoVazio(Context ctx){
+
+        String FOLLWERS_CHANNEL_ID = "mychannel01";
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(FOLLWERS_CHANNEL_ID, "Followers",
+                    NotificationManager.IMPORTANCE_DEFAULT);
+        }
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(ctx);
         mBuilder.setAutoCancel(true)
                 .setSmallIcon(R.mipmap.ic_launcher)

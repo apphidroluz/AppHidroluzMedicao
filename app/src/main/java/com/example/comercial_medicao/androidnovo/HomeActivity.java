@@ -111,7 +111,6 @@ public class HomeActivity extends AppCompatActivity {
                         HomeActivity.this,
                         Tela_erro.class);
                 startActivity(it);
-                Log.e("erro", "deu ruim");
 
             }else{
 
