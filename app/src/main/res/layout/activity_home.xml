@@ -141,6 +141,10 @@ tools:context="com.example.comercial_medicao.androidnovo.HomeActivity">
                     app:wlv_titleCenterSize="30sp"
                     app:wlv_titleCenterStrokeColor="@color/branco"
                     app:wlv_titleCenterStrokeWidth="2dp"
+                    app:wlv_titleBottomColor="@color/fonte"
+                    app:wlv_titleBottomSize="20sp"
+                    app:wlv_titleBottomStrokeColor="@color/branco"
+                    app:wlv_titleBottomStrokeWidth="2dp"
                     app:wlv_waveAmplitude="0"
                     />
                 <!-- Info -->
@@ -211,6 +215,10 @@ tools:context="com.example.comercial_medicao.androidnovo.HomeActivity">
                     app:wlv_titleCenterSize="30sp"
                     app:wlv_titleCenterStrokeColor="@color/branco"
                     app:wlv_titleCenterStrokeWidth="2dp"
+                    app:wlv_titleBottomColor="@color/fonte"
+                    app:wlv_titleBottomSize="20sp"
+                    app:wlv_titleBottomStrokeColor="@color/branco"
+                    app:wlv_titleBottomStrokeWidth="1.5dp"
                     app:wlv_waveAmplitude="0"
                     />
                 <!-- Info -->

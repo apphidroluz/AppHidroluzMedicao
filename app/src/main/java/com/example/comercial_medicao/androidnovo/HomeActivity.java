@@ -126,7 +126,11 @@ public class HomeActivity extends AppCompatActivity {
                 }
                 if (Integer.parseInt(caixa.getNivel()) > 100) {
                     mWaveLoadingView.setCenterTitle("Atenção");
-                } else {
+                    mWaveLoadingView.setBottomTitle("Transbordo");
+                } else if (Integer.parseInt(caixa.getNivel()) < 49){
+                    mWaveLoadingView.setCenterTitle(caixa.getNivel() + "%");
+                    mWaveLoadingView.setBottomTitle("Nível baixo");
+                }else{
                     mWaveLoadingView.setCenterTitle(caixa.getNivel() + "%");
                 }
                 mWaveLoadingView.setAmplitudeRatio(60);
@@ -151,7 +155,11 @@ public class HomeActivity extends AppCompatActivity {
                 }
                 if (Integer.parseInt(caixa.getNivel2()) > 100) {
                     mWaveLoadingView2.setCenterTitle("Atenção");
-                } else {
+                    mWaveLoadingView2.setBottomTitle("Transbordo");
+                } else if (Integer.parseInt(caixa.getNivel2()) < 49){
+                    mWaveLoadingView2.setCenterTitle(caixa.getNivel2() + "%");
+                    mWaveLoadingView2.setBottomTitle("Nível baixo");
+                }else{
                     mWaveLoadingView2.setCenterTitle(caixa.getNivel2() + "%");
                 }
                 mWaveLoadingView2.setAmplitudeRatio(60);

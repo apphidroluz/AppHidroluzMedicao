@@ -140,16 +140,11 @@ public class NotificationService extends Service {
 
     public void gerarNotificacaoVazio(Context ctx){
 
-        String FOLLWERS_CHANNEL_ID = "mychannel01";
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel(FOLLWERS_CHANNEL_ID, "Followers",
-                    NotificationManager.IMPORTANCE_DEFAULT);
-        }
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(ctx);
         mBuilder.setAutoCancel(true)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle("AVISO")
-                .setContentText("Seu reservatório está vazio")
+                .setContentText("Seu reservatório está vazio.")
                 .setLights(Color.WHITE, 1000, 5000)
                 .setVibrate(new long[]{100, 500, 200, 800})
                 .setWhen(System.currentTimeMillis())
@@ -176,6 +171,11 @@ public class NotificationService extends Service {
 
     //   NOTIFICAÇÃO CHEIO
     public void gerarNotificacaoMax(Context ctx){
+        String FOLLWERS_CHANNEL_ID = "mychannel01";
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(FOLLWERS_CHANNEL_ID, "Followers",
+                    NotificationManager.IMPORTANCE_DEFAULT);
+        }
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(ctx);
         mBuilder.setAutoCancel(true)
                 .setSmallIcon(R.mipmap.ic_launcher)
