@@ -38,8 +38,6 @@ public class DadosArduino extends  AsyncTask{
     }
 
 
-
-
     public static void main(String[] args) {
 
         List<String> valores = new ArrayList<>();
