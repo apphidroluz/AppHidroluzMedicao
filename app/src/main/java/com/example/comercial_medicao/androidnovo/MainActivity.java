@@ -53,7 +53,7 @@ public class MainActivity extends Activity {
         login = lclogin.getText().toString();
         senha = lcsenha.getText().toString();
 
-        if (login.equals("hidroluz") && senha.equals("1234")){
+        if (login.equals("Villa") && senha.equals("1600")){
 
             SharedPreferences settings = getSharedPreferences(
                     PREF_NAME, MODE_PRIVATE);

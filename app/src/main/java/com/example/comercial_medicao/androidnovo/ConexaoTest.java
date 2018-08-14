@@ -12,6 +12,7 @@ public class ConexaoTest {
         if (conmag.getNetworkInfo(1).isConnected()) {
             return true;
         }
+
         if (conmag.getNetworkInfo(0).isConnected()) {
             return true;
         }
